@@ -17,4 +17,4 @@ Route::post('/login', [AuthController::class, 'login']);
 
 
 Route::get('/profile', [ProfileController::class, 'show']);
-Route::post('/profile', [ProfileController::class, 'updatePassword']);
+Route::post('/profile', [ProfileController::class, 'updatePassword'])->name('update.password');

@@ -1,47 +1,31 @@
 @extends('layouts.layout')
 
 @section('content')
-    <!DOCTYPE html>
-    <html lang="en">
+    <h1>Profile</h1>
+    <p>Name: {{ $user->name }}</p>
+    <p>Email: {{ $user->email }}</p>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Profile</title>
-        <!-- Include any CSS or JavaScript libraries -->
-    </head>
+    <form method="POST" action="{{ route('update.password') }}">
+        @csrf
 
-    <body>
-        <header>
-            <!-- Include your header content here -->
-            <h1>Profile</h1>
-        </header>
+        <div class="form-group">
+            <label for="current_password">Current Password</label>
+            <input type="password" name="current_password" id="current_password" class="form-control" required>
+            @error('current_password')
+                <div class="text-danger">{{ $message }}</div>
+            @enderror
+        </div>
 
-        <nav>
-            <!-- Include your navigation menu here -->
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/profile">Profile</a></li>
-                <li><a href="/logout">Logout</a></li>
-                <!-- Add more navigation links as needed -->
-            </ul>
-        </nav>
+        <div class="form-group">
+            <label for="password">New Password</label>
+            <input type="password" name="password" id="password" class="form-control" required>
+        </div>
 
-        <main>
-            <!-- Profile content goes here -->
-            <h2>Welcome, {{ Auth::user()->name }}</h2>
-            <!-- Display user profile information -->
-            <p>Email: {{ Auth::user()->email }}</p>
-            <!-- Add more profile information as needed -->
-        </main>
+        <div class="form-group">
+            <label for="password_confirmation">Confirm New Password</label>
+            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" required>
+        </div>
 
-        <footer>
-            <!-- Include your footer content here -->
-            <p>&copy; <?php echo date('Y'); ?> Your Website Footer</p>
-        </footer>
-
-        <!-- Include any additional JavaScript at the bottom -->
-    </body>
-
-    </html>
+        <button type="submit" class="btn btn-primary">Update Password</button>
+    </form>
 @endsection

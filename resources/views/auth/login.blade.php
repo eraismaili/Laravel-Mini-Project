@@ -3,9 +3,9 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-12 col-sm-8 col-md-6">
-            <form class="form mt-5" action="{{ route('register') }}" method="post">
+            <form class="form mt-5 bg-light p-4 rounded" action="{{ route('login') }}" method="post">
                 @csrf
-                <h3 class="text-center text-dark">Login</h3>
+                <h3 class="text-center text-dark mb-4">Login</h3>
                 <div class="form-group mt-3">
                     <label for="email" class="text-dark">Email:</label><br>
                     <input type="email" name="email" id="email" class="form-control">
@@ -14,13 +14,12 @@
                     <label for="password" class="text-dark">Password:</label><br>
                     <input type="password" name="password" id="password" class="form-control">
                 </div>
-
-                <div class="form-group">
-                    <label for="remember-me" class="text-dark"></label><br>
-                    <input type="submit" name="submit" class="btn btn-dark btn-md" value="submit">
+                <div class="form-group mt-4">
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
                 </div>
-                <div class="text-right mt-2">
-                    <a href="/login" class="text-dark">Login here</a>
+                <div class="text-center mt-3">
+                    <span class="text-dark">Don't have an account? </span><a href="{{ route('register') }}"
+                        class="text-primary">Register here</a>
                 </div>
             </form>
         </div>
