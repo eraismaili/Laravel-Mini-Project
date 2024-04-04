@@ -20,7 +20,9 @@ Route::post('/login', [AuthController::class, 'login']);
 
 
 Route::get('/profile', [ProfileController::class, 'show']);
-Route::post('/profile', [ProfileController::class, 'updatePassword'])->name('update.password');
+Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('update.password');
+
 
 Route::get('/employees', [EmployeesController::class, 'index'])->name('employees.index');
 Route::get('/companies', [CompaniesController::class, 'index'])->name('companies.index');
