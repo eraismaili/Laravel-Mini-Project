@@ -6,6 +6,23 @@
             <form class="form mt-5 bg-light p-4 rounded" action="{{ route('login') }}" method="post">
                 @csrf
                 <h3 class="text-center text-dark mb-4">Login</h3>
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }} </li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                @if (session('error'))
+                    <div class="alert alert-danger">
+                        {{ session('error') }}
+                    </div>
+                @endif
+
                 <div class="form-group mt-3">
                     <label for="email" class="text-dark">Email:</label><br>
                     <input type="email" name="email" id="email" class="form-control">
