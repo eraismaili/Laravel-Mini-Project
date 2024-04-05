@@ -14,6 +14,26 @@ class ProfileController extends Controller
         return view('auth.profile', compact('user'));
     }
 
+    public function edit()
+    {
+        $user = auth()->user();
+        return view('auth.edit', compact('user'));
+    }
+
+    public function update(Request $request)
+    {
+        $user = User::findOrFail(auth()->user()->id);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+        return redirect()->route('profile.show')->with('success', 'Profile updated successfully!');
+    }
+
     public function updatePassword(Request $request)
     {
         $request->validate([
@@ -21,7 +41,7 @@ class ProfileController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        $user = User::where('id', auth()->user()->id)->first();
+        $user = User::findOrFail(auth()->user()->id);
 
         if (!password_verify($request->current_password, $user->password)) {
             return redirect()->back()->withErrors(['current_password' => 'The current password is incorrect.']);

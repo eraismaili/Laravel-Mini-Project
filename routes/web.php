@@ -19,10 +19,15 @@ Route::get('/login', [AuthController::class, 'LoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
 
-Route::get('/profile', [ProfileController::class, 'show']);
-Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
-Route::post('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('update.password');
+Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 
+Route::get('/profile/update-password', function () {
+    return view('updatepassword');
+})->name('profile.update.password');
+
+Route::put('/profile/updatePassword', [ProfileController::class, 'updatePassword'])->name('update.password');
 
 Route::get('/employees', [EmployeesController::class, 'index'])->name('employees.index');
 Route::get('/companies', [CompaniesController::class, 'index'])->name('companies.index');

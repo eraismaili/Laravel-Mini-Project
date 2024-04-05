@@ -34,16 +34,14 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        // Validate the request data
+
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
         ]);
 
-        // Attempt to authenticate the user
         if (Auth::attempt($credentials)) {
-            // Authentication successful, redirect to profile page or other authenticated area
-            return redirect()->intended('/profile');
+            return redirect()->route('profile.show');
         } else {
             // Authentication failed, redirect back with error message
             return redirect()->back()->withErrors(['login_error' => 'Invalid email or password.']);
