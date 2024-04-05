@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CompanyRequest;
+use App\Http\Resources\CompanyResource;
 use App\Models\Company;
 use Illuminate\Http\Request;
 
@@ -10,19 +11,40 @@ class CompaniesController extends Controller
 {
     public function index()
     {
-        $companies = Company::all(); // Fetch all companies
+        $companies = Company::paginate(10);
 
-        return view('companies.index', compact('companies'));
+        return CompanyResource::collection($companies);
     }
-    public function store(CompanyRequest $request)
+    public function store(Request $request)
     {
-        Company::create($request->validated());
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:companies,email',
 
-        return redirect()->route("companies.index")->with("success", "Company created successfully");
+        ]);
+
+        $company = Company::create($request->all());
+        return new CompanyResource($company);
     }
-    public function update(CompanyRequest $request, Company $company)
+    public function show(Company $company)
     {
-        $company->update($request->validated());
-        return redirect()->route("companies.index")->with("success", "Company updated successfully.");
+        return new CompanyResource($company);
+    }
+
+    public function update(Request $request, Company $company)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:companies,email,' . $company->id,
+
+        ]);
+
+        $company->update($request->all());
+        return new CompanyResource($company);
+    }
+    public function destroy(Company $company)
+    {
+        $company->delete();
+        return response()->json(['message' => 'Company deleted successfully']);
     }
 }

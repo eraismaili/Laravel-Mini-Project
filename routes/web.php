@@ -7,6 +7,7 @@ use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\CompaniesController;
 
 
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -30,5 +31,10 @@ Route::get('/profile/update-password', function () {
 Route::put('/profile/updatePassword', [ProfileController::class, 'updatePassword'])->name('update.password');
 
 Route::get('/employees', [EmployeesController::class, 'index'])->name('employees.index');
-Route::get('/companies', [CompaniesController::class, 'index'])->name('companies.index');
 
+
+Route::get('/companies', [CompaniesController::class, 'index'])->name('companies.index');
+Route::get('/test', [CompaniesController::class, 'store'])->name('companies.store');
+Route::get('/companies/{company}', [CompaniesController::class, 'show'])->name('companies.show');
+Route::put('/companies/{company}', [CompaniesController::class, 'update'])->name('companies.update');
+Route::delete('/companies/{company}', [CompaniesController::class, 'destroy'])->name('companies.destroy');
