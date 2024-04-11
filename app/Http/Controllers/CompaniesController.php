@@ -13,35 +13,47 @@ class CompaniesController extends Controller
     {
         $companies = Company::paginate(10);
 
-        return CompanyResource::collection($companies);
+        return view('companies.index', compact('companies'));
     }
-    public function store(Request $request)
+    public function create()
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:companies,email',
+        return view('companies.create');
+    }
+    public function store(CompanyRequest $request)
+    {
+        $validatedData = $request->validated();
 
-        ]);
+        $company = new Company();
+        $company->name = $validatedData['name'];
+        $company->email = $validatedData['email'];
+        $company->website = $validatedData['website'];
 
-        $company = Company::create($request->all());
-        return new CompanyResource($company);
+        if ($request->hasFile('logo')) {
+            $logoPath = $request->file('logo')->store('public', 'logos');
+            $company->logo = $logoPath;
+        }
+
+        $company->save();
+
+        return redirect()->route("companies.index")->with("success", "Company created successfully");
     }
     public function show(Company $company)
     {
-        return new CompanyResource($company);
+        return view('companies.show', compact('companies'));
     }
-
-    public function update(Request $request, Company $company)
+    public function edit(Company $company)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:companies,email,' . $company->id,
-
-        ]);
-
-        $company->update($request->all());
-        return new CompanyResource($company);
+        return view('companies.edit', compact('company'));
     }
+    public function update(CompanyRequest $request, Company $company)
+    {
+        $validatedData = $request->validated();
+
+        $company->update($validatedData);
+
+        return redirect()->route("companies.index")->with("success", "Company updated successfully");
+    }
+
     public function destroy(Company $company)
     {
         $company->delete();

@@ -1,10 +1,12 @@
-<!-- resources/views/companies/index.blade.php -->
-
 @extends('layouts.layout')
 
 @section('content')
     <div class="container">
         <h1>List of Companies</h1>
+
+        <div class="mb-3">
+            <a href="{{ route('companies.create') }}" class="btn btn-primary">Create New Company</a>
+        </div>
 
         <table class="table">
             <thead>
@@ -13,7 +15,7 @@
                     <th>Email</th>
                     <th>Logo</th>
                     <th>Website</th>
-                    <!-- Add more table headers as needed -->
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,13 +25,22 @@
                         <td>{{ $company->email }}</td>
                         <td>
                             @if ($company->logo)
-                                <img src="{{ $company->logo }}" alt="Company Logo" width="50">
+                                <img src="{{ asset('storage/' . $company->logo) }}" alt="Company Logo" width="50">
                             @else
                                 No Logo
                             @endif
                         </td>
                         <td><a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></td>
-                        <!-- Display more company information as needed -->
+                        <td>
+                            <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-primary">Edit</a>
+                            <form action="{{ route('companies.destroy', $company->id) }}" method="POST"
+                                style="display: inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger"
+                                    onclick="return confirm('Are you sure you want to delete this company?')">Delete</button>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
