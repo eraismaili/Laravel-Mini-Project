@@ -59,7 +59,7 @@
 <body>
     <div class="container">
         <h1>Edit Employee</h1>
-        <form action="{{ route('employees.update', $employee->id) }}" method="POST">
+        <form action="{{ route('profile.update') }}" method="POST">
             @csrf
             @method('PUT')
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\CompanyRequest;
+use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class CompaniesController extends Controller
     {
         return view('companies.create');
     }
-    public function store(CompanyRequest $request)
+    public function store(CompanyRequest $request): RedirectResponse
     {
         $validatedData = $request->validated();
 
@@ -45,7 +46,7 @@ class CompaniesController extends Controller
     {
         return view('companies.edit', compact('company'));
     }
-    public function update(CompanyRequest $request, Company $company)
+    public function update(CompanyRequest $request, Company $company): RedirectResponse
     {
         $validatedData = $request->validated();
 
