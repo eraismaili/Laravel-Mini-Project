@@ -17,8 +17,7 @@ class EmployeesController extends Controller
     }
     public function create()
     {
-        $companies = Company::all();
-        return view('employees.create', compact('companies'));
+        return view('employees.create');
     }
     public function store(EmployeeRequest $request)
     {

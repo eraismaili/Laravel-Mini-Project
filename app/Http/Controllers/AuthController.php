@@ -18,11 +18,14 @@ class AuthController extends Controller
     {
 
         $user = new User();
+        //e  thirr funksionin validated para se me i perdor requestat 
         $user->name = $request->name;
         $user->email = $request->email;
         $user->password = bcrypt($request->password);
         $user->save();
 
+        $role = $request->role;
+        $user->assignRole($role);
 
         return redirect()->route('login')->with('success', 'Registration successful!');
     }
@@ -34,7 +37,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-
+        //perdor form request 
         $credentials = $request->validate([
             'email' => 'required|email',
             'password' => 'required',
@@ -43,7 +46,6 @@ class AuthController extends Controller
         if (Auth::attempt($credentials)) {
             return redirect()->route('profile.show');
         } else {
-            // Authentication failed, redirect back with error message
             return redirect()->back()->withErrors(['login_error' => 'Invalid email or password.']);
         }
     }

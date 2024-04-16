@@ -7,6 +7,6 @@
 
     <div>
         <a href="{{ route('profile.edit') }}" class="btn btn-primary">Edit Profile</a>
-        <a href="{{ route('update.password') }}" class="btn btn-primary">Update Password</a>
+        <a href="{{ route('profile.update-password.form') }}" class="btn btn-primary">Update Password</a>
     </div>
 @endsection

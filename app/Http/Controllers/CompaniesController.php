@@ -12,7 +12,7 @@ class CompaniesController extends Controller
 {
     public function index()
     {
-        $companies = Company::paginate(10);
+        $companies = Company::paginate(5);
 
         return view('companies.index', compact('companies'));
     }
@@ -30,7 +30,7 @@ class CompaniesController extends Controller
         $company->website = $validatedData['website'];
 
         if ($request->hasFile('logo')) {
-            $logoPath = $request->file('logo')->store('public', 'logos');
+            $logoPath = $request->file('logo')->store('public', 'logos');//me kqyr pse spo funksionon
             $company->logo = $logoPath;
         }
 

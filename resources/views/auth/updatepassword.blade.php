@@ -9,7 +9,7 @@
         </div>
     @endif
 
-    <form action="{{ route('update.password') }}" method="POST">
+    <form action="{{ route('profile.update-password') }}" method="POST">
         @csrf
         @method('PUT')
 

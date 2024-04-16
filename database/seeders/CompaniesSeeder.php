@@ -13,12 +13,7 @@ class CompaniesSeeder extends Seeder
      */
     public function run(): void
     {
-        Company::factory()->create([
-            'name' => 'Test Company',
-            'email' => 'test@example.com',
-            'logo' => 'https://via.placeholder.com/100x100',
-            'website' => 'https://www.example1.com',
-        ]);
+        Company::factory(20)->create();
 
     }
 }
