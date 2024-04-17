@@ -16,6 +16,10 @@ Route::post('/register', [AuthController::class, 'register']);
 
 Route::get('/login', [AuthController::class, 'LoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
+Route::get('/login', [AuthController::class, 'LoginForm'])->name('login');
+
+Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
+
 
 
 Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');

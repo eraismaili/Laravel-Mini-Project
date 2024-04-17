@@ -45,7 +45,7 @@
             padding: 20px;
             text-align: center;
             position: relative;
-            height: calc(100vh - 120px);
+            min-height: calc(100vh - 120px);
             display: flex;
             justify-content: center;
             align-items: center;
