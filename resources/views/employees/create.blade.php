@@ -60,7 +60,7 @@
 <body>
     <div class="container">
         <h1>Create Employee</h1>
-        <form action="{{ route('employees.store') }}" method="POST">
+        <form action="{{ route('employees.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <label for="first_name">First Name:</label>
             <input type="text" name="first_name" id="first_name">

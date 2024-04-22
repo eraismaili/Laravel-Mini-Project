@@ -67,6 +67,7 @@
     <div class="container">
         <h1>Create Company</h1>
         <form action="{{ route('companies.store') }}" method="POST" enctype="multipart/form-data">
+
             @csrf
             <label for="name">Name:</label>
             <input type="text" id="name" name="name"><br>

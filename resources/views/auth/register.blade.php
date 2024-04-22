@@ -123,16 +123,6 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="form-group mt-3">
-                        <label for="role" class="text-dark">Role:</label><br>
-                        <select name="role" id="role" class="form-control">
-                            <option value="user">User</option>
-                            <option value="admin">Admin</option>
-                        </select>
-                        @error('role')
-                            <span class="text-danger">{{ $message }}</span>
-                        @enderror
-                    </div>
 
                     <div class="form-group mt-4">
                         <button type="submit" class="btn btn-primary btn-block">Register</button>

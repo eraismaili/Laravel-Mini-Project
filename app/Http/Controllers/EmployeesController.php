@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\EmployeeRequest;
+use Illuminate\Http\RedirectResponse;
 use App\Models\Employee;
 use App\Models\Company;
 use Illuminate\Http\Request;
@@ -12,16 +13,19 @@ class EmployeesController extends Controller
     //
     public function index()
     {
-        $employees = Employee::paginate(10);
+        $employees = Employee::paginate(5);
         return view('employees.index', compact('employees'));
     }
     public function create()
     {
-        return view('employees.create');
+        $companies = Company::all();
+        return view('employees.create', compact('companies'));
     }
-    public function store(EmployeeRequest $request)
+    public function store(EmployeeRequest $request): RedirectResponse
     {
         $validatedData = $request->validated();
+
+        $validatedData['company_id'] = $request->input('company_id');
 
         Employee::create($validatedData);
 
@@ -33,6 +37,7 @@ class EmployeesController extends Controller
     }
     public function edit(Employee $employee)
     {
+
         return view('employees.edit', compact('employee'));
     }
     public function update(EmployeeRequest $request, Employee $employee)

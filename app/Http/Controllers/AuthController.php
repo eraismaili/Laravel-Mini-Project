@@ -9,7 +9,7 @@ use App\Models\User;
 
 class AuthController extends Controller
 {
-    public function RegistrationForm()
+    public function registrationForm()
     {
         return view('auth.register');
     }
@@ -24,16 +24,16 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        $role = $request->role;
+        $role = 'user';
         $user->assignRole($role);
 
         return redirect()->route('login')->with('success', 'Registration successful!');
     }
 
-    public function LoginForm()
+    public function loginForm()
     {
         return view('auth.login');
-    }
+    }//nese kthen veq view me kqyr qysh kthehet direkt te web.php e mos me shtu ne controller hiq
 
     public function login(Request $request)
     {

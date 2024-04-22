@@ -13,7 +13,7 @@ class CheckIfAuth
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle($request, Closure $next, $role)
+    public function handle($request, Closure $next, $role)// me kqyr me hek closure $next, me provu me thirr direkt
     {
         if (!$request->user()->hasRole($role)) {
             abort(403, 'Unauthorized action.');
