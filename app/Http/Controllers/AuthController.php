@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -16,11 +17,12 @@ class AuthController extends Controller
 
     public function register(RegisterRequest $request)
     {
+        $validatedData = $request->validated();
 
         $user = new User();
-        //e  thirr funksionin validated para se me i perdor requestat 
-        $user->name = $request->name;
-        $user->email = $request->email;
+        //e  thirr funksionin validated para se me i perdor requestat --
+        $user->name = $validatedData['name'];
+        $user->email = $validatedData['email'];
         $user->password = bcrypt($request->password);
         $user->save();
 
@@ -35,13 +37,10 @@ class AuthController extends Controller
         return view('auth.login');
     }//nese kthen veq view me kqyr qysh kthehet direkt te web.php e mos me shtu ne controller hiq
 
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        //perdor form request 
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+        //perdor form request --
+        $credentials = $request->validated();
 
         if (Auth::attempt($credentials)) {
             return redirect()->route('profile.show');

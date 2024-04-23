@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Http\Requests\UserRequest;
 
 class ProfileController extends Controller
 {
@@ -20,27 +21,20 @@ class ProfileController extends Controller
         return view('auth.edit', compact('user'));
     }
 
-    public function update(Request $request)
+    public function update(UserRequest $request)
     {
-        $user = User::findOrFail(auth()->user()->id);
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-        ]);
+        $user = User::findOrFail(auth()->id());
 
-        $user->name = $request->name;
-        $user->email = $request->email;
+        $validatedData = $request->validated();
+
+        $user->name = $validatedData['name'];
+        $user->email = $validatedData['email'];
         $user->save();
         return redirect()->route('profile.show')->with('success', 'Profile updated successfully!');
     }
 
-    public function updatePassword(Request $request)
+    public function updatePassword(UserRequest $request)
     {
-        $request->validate([
-            'current_password' => 'required',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
-
         $user = User::findOrFail(auth()->user()->id);
 
         if (!password_verify($request->current_password, $user->password)) {

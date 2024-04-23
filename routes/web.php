@@ -19,29 +19,23 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
 
-
-
 Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
 Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
 Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-
 Route::get('/profile/update-password', [ProfileController::class, 'showUpdatePasswordForm'])->name('profile.update-password.form');
 Route::put('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
-
-Route::get('/employees', [EmployeesController::class, 'index'])->name('employees.index');
-//Route::resource('employees', EmployeesController::class);// me kqyr me shtu routes vet jo me i bo qeshtu me resource
 
 // Web page routes for Companies
 
 Route::get('/companies', [CompaniesController::class, 'index'])->name('companies.index');
 Route::get('/companies/create', [CompaniesController::class, 'create'])->name('companies.create');
 Route::post('/companies', [CompaniesController::class, 'store'])->name('companies.store');
-Route::get('/companies/{company}', [CompaniesController::class, 'show'])->('companies.show');
-Route::get('/companies/{company}/edit', [CompaniesController::class, 'edit'])->('companies.edit');
-Route::put('/companies/{company}', [CompaniesController::class, 'update'])->('companies.update');
-Route::delete('/companies/{company}', [CompaniesController::class, 'destroy'])->('companies.destroy');
+Route::get('/companies/{company}', [CompaniesController::class, 'show'])->name('companies.show');
+Route::get('/companies/{company}/edit', [CompaniesController::class, 'edit'])->name('companies.edit');
+Route::put('/companies/{company}', [CompaniesController::class, 'update'])->name('companies.update');
+Route::delete('/companies/{company}', [CompaniesController::class, 'destroy'])->name('companies.destroy');
 
-//Employees 
+//Web page routes for Employees 
 
 Route::get('/employees', [EmployeesController::class, 'index'])->name('employees.index');
 Route::get('/employees/create', [EmployeesController::class, 'create'])->name('employees.create');
@@ -51,9 +45,9 @@ Route::get('/employees/{employee}/edit', [EmployeesController::class, 'edit'])->
 Route::put('/employees/{employee}', [EmployeesController::class, 'update'])->name('employees.update');
 Route::delete('/employees/{employee}', [EmployeesController::class, 'destroy'])->name('employees.destroy');
 
+//middlewares
 
-
-Route::middleware(['CheckIfAuth', 'admin'])->group(function () {
+Route::middleware([CheckIfAuth::class, ':admin'])->group(function () {
     Route::get('/users', [AuthController::class, 'index']);
     Route::post('/users', [AuthController::class, 'store']);
 
@@ -61,11 +55,3 @@ Route::middleware(['CheckIfAuth', 'admin'])->group(function () {
     Route::post('/companies', [CompaniesController::class, 'store']);
 });
 
-// Route  for user routes
-Route::middleware(['CheckIfAuth', 'role:user'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-    Route::get('/profile/update-password', [ProfileController::class, 'showUpdatePasswordForm'])->name('profile.update.password');
-    Route::put('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.updatePassword');
-});

@@ -11,12 +11,16 @@ class CheckIfAuth
     /**
      * Handle an incoming request.
      *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @param  mixed  ...$roles
+     * @return mixed
      */
-    public function handle($request, Closure $next, $role)// me kqyr me hek closure $next, me provu me thirr direkt
+    public function handle($request, Closure $next, ...$roles)
     {
-        if (!$request->user()->hasRole($role)) {
-            abort(403, 'Unauthorized action.');
+        foreach ($roles as $role) {
+            dd($role);
+
         }
         return $next($request);
     }
