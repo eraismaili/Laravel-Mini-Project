@@ -10,16 +10,17 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 
 class UserSeeder extends Seeder
-{
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+{ 
+    $permissions = [
+            'view-company'
+        ];
+    public function run()
     {
-        //krijimi i permissions
-        //  $manageCompaniesPermission = Permission::create(['name' => 'manage companies']);
+        foreach ($permissions as $permission) {
+            Permission::create(['name' => $permission]);
+        }
 
-        //$adminRole->givePermissionTo($manageCompaniesPermission);
+       
 
 
         $user = User::create([

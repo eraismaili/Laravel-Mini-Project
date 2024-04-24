@@ -45,6 +45,6 @@
                 @endforeach
             </tbody>
         </table>
-        {{ $employees->links('pagination.custom') }}
+        {{ $companies->links('pagination.custom') }}
     </div>
 @endsection

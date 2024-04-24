@@ -7,9 +7,24 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 class CompaniesController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    //     $this->middleware('role:admin')->except('delete');
+    //     $this->middleware('role:user')->only('index', 'show');
+    // }
+    function __construct()
+    {
+        $this->middleware(['permission:view-users|create-users|edit-users|delete-users|view-companies|create-companies|edit-companies|delete-companies'], ['only' => ['index', 'show']]);
+        $this->middleware(['permission:create-users|create-companies'], ['only' => ['create', 'store']]);
+        $this->middleware(['permission:edit-users|edit-companies'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:delete-users|delete-companies'], ['only' => ['destroy']]);
+    }
+
     public function index()
     {
         $companies = Company::paginate(5);

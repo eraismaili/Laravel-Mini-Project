@@ -2,38 +2,54 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class PermissionSeeder extends Seeder
 {
+
     /**
-     * Run the database seeds.
+     * List of applications to add.
      */
-    public function run()
+    private $permissions = [
+        'view-users',
+        'create-users',
+        'edit-users',
+        'delete-users',
+        'view-companies',
+        'create-companies',
+        'edit-companies',
+        'delete-companies'
+    ];
+
+
+    /**
+     * Seed the application's database.
+     */
+    public function run(): void
     {
-        Permission::create(['name' => 'view users']);
-        Permission::create(['name' => 'create users']);
-        Permission::create(['name' => 'edit users']);
-        Permission::create(['name' => 'delete users']);
+        foreach ($this->permissions as $permission) {
+            Permission::create(['name' => $permission]);
+        }
 
+        // Create admin User and assign the role to him.
+        $user = User::create([
+            'name' => 'Prevail Ejimadu',
+            'email' => 'test@example.com',
+            'password' => Hash::make('password')
+        ]);
 
-        Permission::create(['name' => 'view companies']);
-        Permission::create(['name' => 'create companies']);
-        Permission::create(['name' => 'edit companies']);
-        Permission::create(['name' => 'delete companies']);
+        $role = Role::create(['name' => 'Admin']);
 
+        $permissions = Permission::pluck('id', 'id')->all();
 
-        Permission::create(['name' => 'view employees']);
-        Permission::create(['name' => 'create employees']);
-        Permission::create(['name' => 'edit employees']);
-        Permission::create(['name' => 'delete employees']);
-        //users
-        Permission::create(['name' => 'view own data']);
-        Permission::create(['name' => 'edit own data']);
-        Permission::create(['name' => 'delete own data']);
+        $role->syncPermissions($permissions);
 
-        Permission::create(['name' => 'all']);
+        // $user->assignRole([$role->id]);
     }
 }
