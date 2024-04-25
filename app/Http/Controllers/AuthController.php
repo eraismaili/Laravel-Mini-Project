@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 
+
 class AuthController extends Controller
 {
     public function registrationForm()
@@ -26,8 +27,7 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-        $role = 'user';
-        $user->assignRole($role);
+        $user->assignRole('user');
 
         return redirect()->route('login')->with('success', 'Registration successful!');
     }

@@ -33,23 +33,23 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        foreach ($this->permissions as $permission) {
-            Permission::create(['name' => $permission]);
-        }
+        // foreach ($this->permissions as $permission) {
+        //Permission::create(['name' => $permission]);
+        // }
 
         // Create admin User and assign the role to him.
         $user = User::create([
-            'name' => 'Prevail Ejimadu',
-            'email' => 'test@example.com',
+            'name' => 'Gresa Salihu',
+            'email' => 'gresa@gmail.com',
             'password' => Hash::make('password')
         ]);
 
-        $role = Role::create(['name' => 'Admin']);
+        $role = Role::where('name', 'Admin')->first();
 
-        $permissions = Permission::pluck('id', 'id')->all();
+        // $permissions = Permission::pluck('id', 'id')->all();
 
-        $role->syncPermissions($permissions);
+        // $role->syncPermissions($permissions);
 
-        // $user->assignRole([$role->id]);
+        $user->assignRole([$role->id]);
     }
 }

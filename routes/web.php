@@ -26,15 +26,15 @@ Route::get('/profile/update-password', [ProfileController::class, 'showUpdatePas
 Route::put('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
 
 // Web page routes for Companies
-Route::group(['middleware' => ['role:admin']], function () {
-    Route::get('/companies', [CompaniesController::class, 'index'])->name('companies.index');
-    Route::get('/companies/create', [CompaniesController::class, 'create'])->name('companies.create');
-    Route::post('/companies', [CompaniesController::class, 'store'])->name('companies.store');
-    Route::get('/companies/{company}', [CompaniesController::class, 'show'])->name('companies.show');
-    Route::get('/companies/{company}/edit', [CompaniesController::class, 'edit'])->name('companies.edit');
-    Route::put('/companies/{company}', [CompaniesController::class, 'update'])->name('companies.update');
-    Route::delete('/companies/{company}', [CompaniesController::class, 'destroy'])->name('companies.destroy');
-});
+// Route::group(['middleware' => ['role:admin']], function () {
+Route::get('/companies', [CompaniesController::class, 'index'])->name('companies.index');
+Route::get('/companies/create', [CompaniesController::class, 'create'])->name('companies.create');
+Route::post('/companies', [CompaniesController::class, 'store'])->name('companies.store');
+Route::get('/companies/{company}', [CompaniesController::class, 'show'])->name('companies.show');
+Route::get('/companies/{company}/edit', [CompaniesController::class, 'edit'])->name('companies.edit');
+Route::put('/companies/{company}', [CompaniesController::class, 'update'])->name('companies.update');
+Route::delete('/companies/{company}', [CompaniesController::class, 'destroy'])->name('companies.destroy');
+// });
 
 //Web page routes for Employees 
 

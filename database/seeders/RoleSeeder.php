@@ -13,11 +13,11 @@ class RoleSeeder extends Seeder
      */
     public function run()
     {
-        $adminRole = Role::create(['name' => 'admin']);
+        // $adminRole = Role::create(['name' => 'admin']);
         $userRole = Role::create(['name' => 'user']);
 
-        $adminRole->givePermissionTo('all');
+        // $adminRole->givePermissionTo('all');
 
-        $userRole->givePermissionTo(['view own data', 'edit own data']);
+        $userRole->givePermissionTo(['view-companies']);
     }
 }
