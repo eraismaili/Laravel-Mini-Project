@@ -6,6 +6,8 @@ use App\Http\Requests\CompanyRequest;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
+use App\Models\Employee;
+
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -56,8 +58,10 @@ class CompaniesController extends Controller
     }
     public function show(Company $company)
     {
-        return view('companies.show', compact('companies'));
+        $employees = Employee::where('company_id', $company->id)->get();
+        return view('companies.show', compact('company', 'employees'));
     }
+
     public function edit(Company $company)
     {
         return view('companies.edit', compact('company'));

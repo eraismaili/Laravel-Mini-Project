@@ -21,6 +21,7 @@
                         <th>Last Name</th>
                         <th>Email</th>
                         <th>Phone</th>
+                        <th>Company</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -31,6 +32,7 @@
                             <td>{{ $employee->last_name }}</td>
                             <td>{{ $employee->email }}</td>
                             <td>{{ $employee->phone }}</td>
+                            <td>{{ $employee->company->name }}</td>
                             <td>
                                 <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-primary">Edit</a>
                                 <form action="{{ route('employees.destroy', $employee->id) }}" method="POST"
