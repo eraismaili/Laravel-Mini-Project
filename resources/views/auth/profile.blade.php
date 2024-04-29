@@ -71,18 +71,43 @@
         <header>
             <nav>
                 <ul>
-                    <li><a href="{{ route('home') }}">Home</a></li>
-                    <li><a href="{{ route('register') }}">Register</a></li>
-                    <li><a href="{{ route('login') }}">Login</a></li>
-                    <form action="{{ route('logout') }}" method="POST" class="inline">
-                        @csrf
-                        <button type="submit" class="p-3">Logout</button>
-                    </form>
-                    </li>
+                    @guest
+                        <li><a href="{{ route('home') }}">Home</a></li>
+                        <li><a href="{{ route('register') }}">Register</a></li>
+                        <li><a href="{{ route('login') }}">Login</a></li>
+                    @else
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" id="profileDropdown" role="button" aria-haspopup="true"
+                                aria-expanded="false">Profile</a>
+                            <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                                <a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a>
+                                <a class="dropdown-item" href="{{ route('profile.update-password.form') }}">Update Password</a>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="dropdown-item">Logout</button>
+                                </form>
+                        </li>
+                    @endguest
                 </ul>
             </nav>
         </header>
-        <h1>Profile</h1>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                var dropdownToggle = document.querySelector('.dropdown-toggle');
+                var dropdownMenu = document.querySelector('.dropdown-menu');
+
+                dropdownToggle.addEventListener('click', function() {
+                    dropdownMenu.classList.toggle('show');
+                });
+
+                window.addEventListener('click', function(event) {
+                    if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                        dropdownMenu.classList.remove('show');
+                    }
+                });
+            });
+        </script>
+        <h1>Welcome {{ $user->name }}</h1>
         <p>Name: {{ $user->name }}</p>
         <p>Email: {{ $user->email }}</p>
         <div><a href="{{ route('profile.edit') }}" class="btn btn-primary">Edit Profile</a><a
