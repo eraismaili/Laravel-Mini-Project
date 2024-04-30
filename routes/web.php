@@ -19,8 +19,8 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
 
-Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
-Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show')->middleware(middleware: 'auth:web');
+Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit')->middleware(middleware: 'auth:web');
 Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
 Route::get('/profile/update-password', [ProfileController::class, 'showUpdatePasswordForm'])->name('profile.update-password.form');
 Route::put('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');

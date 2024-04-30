@@ -30,13 +30,13 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
-
+        $companyId = $validatedData['company_id'];
         // Create an employee record for the user
         $employee = new Employee();
         $employee->first_name = $user->name;
         $employee->last_name = '';
         $employee->email = $user->email;
-        $employee->company_id = null;
+        $employee->company_id = $companyId;
         $employee->save();
         $user->assignRole('user');
 
