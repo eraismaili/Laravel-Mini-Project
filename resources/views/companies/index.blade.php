@@ -13,6 +13,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Email</th>
+                    <th>Employee</th>
                     <th>Logo</th>
                     <th>Website</th>
                     <th>Actions</th>
@@ -23,6 +24,16 @@
                     <tr>
                         <td>{{ $company->name }}</td>
                         <td>{{ $company->email }}</td>
+                        <td>
+                            @forelse($company->employees as $employee)
+                                {{ $employee->first_name }}
+                                @if (!$loop->last)
+                                    ,
+                                @endif
+                            @empty
+                                No Employees
+                            @endforelse
+                        </td>
                         <td>
                             @if ($company->logo)
                                 <img src="{{ asset('storage/' . $company->logo) }}" alt="Company Logo" width="50">

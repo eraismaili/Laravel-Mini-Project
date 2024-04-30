@@ -7,13 +7,16 @@ use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Employee;
+use App\Models\Company;
 
 
 class AuthController extends Controller
 {
     public function registrationForm()
     {
-        return view('auth.register');
+        $companies = Company::all();
+        return view('auth.register', compact('companies'));
     }
 
     public function register(RegisterRequest $request)
@@ -27,6 +30,14 @@ class AuthController extends Controller
         $user->password = bcrypt($request->password);
         $user->save();
 
+
+        // Create an employee record for the user
+        $employee = new Employee();
+        $employee->first_name = $user->name;
+        $employee->last_name = '';
+        $employee->email = $user->email;
+        $employee->company_id = null;
+        $employee->save();
         $user->assignRole('user');
 
         return redirect()->route('login')->with('success', 'Registration successful!');

@@ -103,6 +103,20 @@
                         @enderror
                     </div>
                     <div class="form-group mt-3">
+                        <label for="last_name" class="text-dark">Last Name:</label><br>
+                        <input type="text" name="last_name" id="last_name" class="form-control">
+                        @error('last_name')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="phone" class="text-dark">Phone:</label><br>
+                        <input type="text" name="phone" id="phone" class="form-control">
+                        @error('phone')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group mt-3">
                         <label for="email" class="text-dark">Email:</label><br>
                         <input type="email" name="email" id="email" class="form-control">
                         @error('email')
@@ -123,7 +137,17 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-
+                    <div class="form-group mt-3">
+                        <label for="company_id" class="text-dark">Company:</label><br>
+                        <select name="company_id" id="company_id" class="form-control">
+                            @foreach ($companies as $company)
+                                <option value="{{ $company->id }}">{{ $company->name }}</option>
+                            @endforeach
+                        </select>
+                        @error('company_id')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </div>
                     <div class="form-group mt-4">
                         <button type="submit" class="btn btn-primary btn-block">Register</button>
                     </div>
