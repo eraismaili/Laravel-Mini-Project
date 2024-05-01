@@ -34,8 +34,9 @@ class AuthController extends Controller
         // Create an employee record for the user
         $employee = new Employee();
         $employee->first_name = $user->name;
-        $employee->last_name = '';
+        $employee->last_name = $request->input('last_name');
         $employee->email = $user->email;
+        $employee->phone = $request->input('phone');
         $employee->company_id = $companyId;
         $employee->save();
         $user->assignRole('user');
