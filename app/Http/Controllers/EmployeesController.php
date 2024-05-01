@@ -8,9 +8,9 @@ use App\Models\Employee;
 use App\Models\Company;
 use Illuminate\Http\Request;
 
+
 class EmployeesController extends Controller
 {
-    //
     public function index()
     {
         $employees = Employee::paginate(5);
@@ -37,12 +37,13 @@ class EmployeesController extends Controller
     }
     public function edit(Employee $employee)
     {
-        return view('employees.edit', compact('employee'));
+
+        $companies = Company::all();
+        return view('employees.edit', compact('employee', 'companies'));
     }
     public function update(EmployeeRequest $request, Employee $employee)
     {
         $validatedData = $request->validated();
-
         $employee->update($validatedData);
 
         return redirect()->route("employees.index")->with("success", "Employee updated successfully");

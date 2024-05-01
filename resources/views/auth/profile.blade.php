@@ -111,9 +111,22 @@
                 });
             });
         </script>
-        <h1>Welcome {{ $user->name }}</h1>
-        <p>Name: {{ $user->name }}</p>
-        <p>Email: {{ $user->email }}</p>
-        <div><a href="{{ route('profile.edit') }}" class="btn btn-primary">Edit Profile</a><a
-                href="{{ route('profile.update-password.form') }}" class="btn btn-primary">Update Password</a></div>
+        </header>
+        @auth
+            <h1>Welcome
+                {{ Auth::user()->name }}
+            </h1>
+            <p>Name: {{ Auth::user()->name }}</p>
+            <p>Email: {{ Auth::user()->email }}</p>
+            <div>
+                <a href="{{ route('profile.edit') }}" class="btn btn-primary">Edit Profile</a>
+                <a href="{{ route('profile.update-password.form') }}" class="btn btn-primary">Update Password</a>
+            </div>
+        @endauth
+
+        @guest
+            <script>
+                window.location = "{{ route('login') }}";
+            </script>
+        @endguest
     @endsection

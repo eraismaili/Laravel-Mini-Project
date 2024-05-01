@@ -58,28 +58,42 @@
 
 <body>
     <div class="container">
-        <h1>Edit Employee</h1>
-        <form action="{{ route('profile.update') }}" method="POST">
-            @csrf
-            @method('PUT')
+        @if (Auth::user()->hasRole('admin'))
+            <h1>Edit Employee</h1>
+            <form action="{{ route('employees.update', $employee) }}" method="POST">
+                @csrf
+                @method('PUT')
 
-            <label for="first_name">First Name:</label>
-            <input type="text" name="first_name" id="first_name" value="{{ $employee->first_name }}">
+                <label for="first_name">First Name:</label>
+                <input type="text" name="first_name" id="first_name" value="{{ $employee->first_name }}">
 
-            <label for="last_name">Last Name:</label>
-            <input type="text" name="last_name" id="last_name" value="{{ $employee->last_name }}">
+                <label for="last_name">Last Name:</label>
+                <input type="text" name="last_name" id="last_name" value="{{ $employee->last_name }}">
 
-            <label for="email">Email:</label>
-            <input type="email" name="email" id="email" value="{{ $employee->email }}">
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email" value="{{ $employee->email }}">
 
-            <label for="phone">Phone:</label>
-            <input type="text" name="phone" id="phone" value="{{ $employee->phone }}">
+                {{-- <label for="phone">Phone:</label>
+                <input type="text" name="phone" id="phone" value="{{ $employee->phone }}"> --}}
+                <label for="phone">Phone:</label>
+                <input type="text" name="phone" id="phone" value="{{ $employee->phone }}" readonly>
 
-            <label for="company_id">Company ID:</label>
-            <input type="text" name="company_id" id="company_id" value="{{ $employee->company_id }}">
 
-            <button type="submit">Update</button>
-        </form>
+                <label for="company_id">Company:</label>
+                <select name="company_id" id="company_id">
+                    @foreach ($companies as $company)
+                        <option value="{{ $company->id }}"
+                            {{ $employee->company_id == $company->id ? 'selected' : '' }}>
+                            {{ $company->name }}
+                        </option>
+                    @endforeach
+                </select>
+
+                <button type="submit">Update</button>
+            </form>
+        @else
+            <p>You do not have permission to edit this employee.</p>
+        @endif
     </div>
 </body>
 
