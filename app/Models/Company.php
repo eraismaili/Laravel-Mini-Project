@@ -19,4 +19,13 @@ class Company extends Model
     {
         return $this->hasMany(Employee::class);
     }
+    public function scopeCreatedLastTenDays($query)
+    {
+        return $query->where('created_at', '>=', now()->subDays(10));
+    }
+    public function scopeHasMoreThanTwoEmployees($query)
+    {
+        return $query->has('employees', '>', 2);
+    }
+
 }
