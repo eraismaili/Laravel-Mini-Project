@@ -23,9 +23,9 @@ class CompaniesController extends Controller
     {
         // $this->middleware(['permission:view-users|create-users|edit-users|delete-users|view-companies|create-companies|edit-companies|delete-companies'], ['only' => ['index', 'show']]);
         $this->middleware(['permission:view-companies'], ['only' => ['index']]);
-        $this->middleware(['permission:create-users|create-companies'], ['only' => ['create', 'store']]);
-        $this->middleware(['permission:edit-users|edit-companies'], ['only' => ['edit', 'update']]);
-        $this->middleware(['permission:delete-users|delete-companies'], ['only' => ['destroy']]);
+        $this->middleware(['permission:create-companies'], ['only' => ['create', 'store']]);
+        $this->middleware(['permission:edit-companies'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:delete-companies'], ['only' => ['destroy']]);
     }
     public function index()
     {

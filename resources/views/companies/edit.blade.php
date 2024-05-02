@@ -80,6 +80,7 @@
                             <a href="#" class="dropdown-toggle" id="profileDropdown" role="button" aria-haspopup="true"
                                 aria-expanded="false">Profile</a>
                             <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                                <a class="dropdown-item" href="{{ route('profile.show') }}">View Profile</a>
                                 <a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a>
                                 <a class="dropdown-item" href="{{ route('profile.update-password.form') }}">Update Password</a>
                                 <form action="{{ route('logout') }}" method="POST">

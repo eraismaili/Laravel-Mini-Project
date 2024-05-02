@@ -2,15 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\EmployeeRequest;
+
 use Illuminate\Http\RedirectResponse;
-use App\Models\Employee;
 use App\Models\Company;
-use Illuminate\Http\Request;
+use App\Models\Employee;
+use App\Http\Requests\EmployeeRequest;
+use Illuminate\Routing\Controller;
 
 
 class EmployeesController extends Controller
 {
+    function __construct()
+    {
+        $this->middleware(['permission:view-users'], ['only' => ['index', 'show']]);
+        $this->middleware(['permission:create-users'], ['only' => ['create', 'store']]);
+        $this->middleware(['permission:edit-users'], ['only' => ['edit', 'update']]);
+        $this->middleware(['permission:delete-users'], ['only' => ['destroy']]);
+    }
     public function index()
     {
         $employees = Employee::paginate(5);
