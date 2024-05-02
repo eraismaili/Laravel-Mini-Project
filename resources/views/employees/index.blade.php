@@ -37,10 +37,10 @@
         }
 
         main {
-            padding: 20px;
+            /* padding: 20px; */
             text-align: center;
             position: relative;
-            min-height: calc(100vh - 120px);
+            /* min-height: calc(100vh - 120px); */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -48,7 +48,7 @@
 
         main h1 {
             font-size: 3rem;
-            color: #a33030;
+            color: #44363694;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 

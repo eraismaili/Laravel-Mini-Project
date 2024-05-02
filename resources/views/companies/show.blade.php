@@ -11,7 +11,7 @@
     <h1>{{ $company->name }}</h1>
     <p>Email: {{ $company->email }}</p>
     @if ($company->logo)
-        <img src="{{ asset('storage/' . $company->logo) }}" alt="Company Logo">
+        <img src="{{ asset('storage/logos/UtlLiljqoDbMUKE85RikbImA0NhdSHaBIwLQGBRE.png') }}" alt="Company Logo">
     @else
         <p>No logo available</p>
     @endif

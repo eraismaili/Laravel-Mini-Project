@@ -54,8 +54,10 @@ class CompaniesController extends Controller
         $company->website = $validatedData['website'];
 
         if ($request->hasFile('logo')) {
-            $logoPath = $request->file('logo')->store('public', 'logos');//me kqyr pse spo funksionon
-            $company->logo = $logoPath;
+            $logo = $request->file('logo');
+            $logoName = time() . '.' . $logo->getClientOriginalExtension();
+            $logo->storeAs('public/images', $logoName);
+            $company->logo = $logoName;
         }
 
         $company->save();
@@ -76,6 +78,13 @@ class CompaniesController extends Controller
     {
         $validatedData = $request->validated();
 
+        if ($request->hasFile('logo')) {
+            $logo = $request->file('logo');
+            $logoName = time() . '.' . $logo->getClientOriginalExtension();
+            $logo->storeAs('public/images', $logoName);
+            $validatedData['logo'] = $logoName;
+        }
+
         $company->update($validatedData);
 
         return redirect()->route("companies.index")->with("success", "Company updated successfully");
@@ -84,6 +93,6 @@ class CompaniesController extends Controller
     public function destroy(Company $company)
     {
         $company->delete();
-        return response()->json(['message' => 'Company deleted successfully']);
+        return redirect()->route('companies.index')->with('success', 'Employee deleted successfully');
     }
 }

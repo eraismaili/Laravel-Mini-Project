@@ -29,10 +29,17 @@ return [
     */
 
     'disks' => [
+        'logos' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/logos'),
+            'url' => env('APP_URL') . '/storage/logos',
+            'visibility' => 'public',
+        ],
+
 
         'local' => [
             'driver' => 'local',
-            'root' => storage_path('app  '),
+            'root' => storage_path('app'),
             'throw' => false,
         ],
 

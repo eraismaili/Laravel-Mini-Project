@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class DailyReport extends Mailable
+class SendDailyEmails extends Mailable
 {
     use Queueable, SerializesModels;
     protected $signature = 'emails:send';
