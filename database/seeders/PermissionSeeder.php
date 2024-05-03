@@ -2,20 +2,12 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-
-use App\Models\User;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class PermissionSeeder extends Seeder
 {
-
-    /**
-     * List of applications to add.
-     */
     private $permissions = [
         'view-users',
         'create-users',
@@ -27,29 +19,18 @@ class PermissionSeeder extends Seeder
         'delete-companies'
     ];
 
-
-    /**
-     * Seed the application's database.
-     */
-    public function run(): void
+    public function run()
     {
-        // foreach ($this->permissions as $permission) {
-        //Permission::create(['name' => $permission]);
-        // }
+        foreach ($this->permissions as $permission) {
+            Permission::create(['name' => $permission]);
+        }
+        $adminRole = Role::where('name', 'admin')->first();
+        $userRole = Role::where('name', 'user')->first();
 
-        // Create admin User and assign the role to him.
-        $user = User::create([
-            'name' => 'Gresa Salihu',
-            'email' => 'gresa@gmail.com',
-            'password' => Hash::make('password')
-        ]);
+        $adminPermissions = Permission::all();
+        $userPermissions = Permission::where('name', 'view-companies')->get();
 
-        $role = Role::where('name', 'Admin')->first();
-
-        // $permissions = Permission::pluck('id', 'id')->all();
-
-        // $role->syncPermissions($permissions);
-
-        $user->assignRole([$role->id]);
+        $adminRole->syncPermissions($adminPermissions);
+        $userRole->syncPermissions($userPermissions);
     }
 }
