@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\CompaniesController;
 
+$middleware = ['auth:web'];
 
 Route::get('/', function () {
     return view('welcome');
@@ -19,33 +20,37 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
 
-Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show')->middleware(middleware: 'auth:web');
-Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit')->middleware(middleware: 'auth:web');
-Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-Route::get('/profile/update-password', [ProfileController::class, 'showUpdatePasswordForm'])->name('profile.update-password.form')->middleware(middleware: 'auth:web');
-Route::put('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
+// Group routes with the same middleware
+Route::middleware($middleware)->group(function () {
+    Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/profile/update-password', [ProfileController::class, 'showUpdatePasswordForm'])->name('profile.update-password.form');
+    Route::put('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
 
-// Web page routes for Companies
+    // Web page routes for Companies
 // Route::group(['middleware' => ['role:admin']], function () {
-Route::get('/companies', [CompaniesController::class, 'index'])->name('companies.index')->middleware(middleware: 'auth:web');
-Route::get('/companies/create', [CompaniesController::class, 'create'])->name('companies.create')->middleware(middleware: 'auth:web');
-Route::post('/companies', [CompaniesController::class, 'store'])->name('companies.store');
-Route::get('/companies/{company}', [CompaniesController::class, 'show'])->name('companies.show')->middleware(middleware: 'auth:web');
-Route::get('/companies/{company}/edit', [CompaniesController::class, 'edit'])->name('companies.edit')->middleware(middleware: 'auth:web');
-Route::put('/companies/{company}', [CompaniesController::class, 'update'])->name('companies.update');
-Route::delete('/companies/{company}', [CompaniesController::class, 'destroy'])->name('companies.destroy');
-// });
+    Route::prefix('companies')->group(function () {
+        Route::get('/', [CompaniesController::class, 'index'])->name('companies.index');
+        Route::get('/create', [CompaniesController::class, 'create'])->name('companies.create');
+        Route::post('/', [CompaniesController::class, 'store'])->name('companies.store');
+        Route::get('/{company}', [CompaniesController::class, 'show'])->name('companies.show');
+        Route::get('/{company}/edit', [CompaniesController::class, 'edit'])->name('companies.edit');
+        Route::put('/{company}', [CompaniesController::class, 'update'])->name('companies.update');
+        Route::delete('/{company}', [CompaniesController::class, 'destroy'])->name('companies.destroy');
+    });
 
-//Web page routes for Employees 
-
-Route::get('/', [EmployeesController::class, 'index'])->name('employees.index')->middleware(middleware: 'auth:web');
-Route::post('/', [EmployeesController::class, 'store'])->name('employees.store');
-Route::get('/create', [EmployeesController::class, 'create'])->name('employees.create')->middleware(middleware: 'auth:web');
-Route::get('/{employee}', [EmployeesController::class, 'show'])->name('employees.show')->middleware(middleware: 'auth:web');
-Route::get('/{employee}/edit', [EmployeesController::class, 'edit'])->name('employees.edit')->middleware(middleware: 'auth:web');
-Route::put('/employees/{employee}', [EmployeesController::class, 'update'])->name('employees.update');
-Route::delete('/employees/{employee}', [EmployeesController::class, 'destroy'])->name('employees.destroy');
-
+    // Group routes with a prefix
+    Route::prefix('employees')->group(function () {
+        Route::get('/', [EmployeesController::class, 'index'])->name('employees.index');
+        Route::get('/create', [EmployeesController::class, 'create'])->name('employees.create');
+        Route::post('/', [EmployeesController::class, 'store'])->name('employees.store');
+        Route::get('/{employee}', [EmployeesController::class, 'show'])->name('employees.show');
+        Route::get('/{employee}/edit', [EmployeesController::class, 'edit'])->name('employees.edit');
+        Route::put('/{employee}', [EmployeesController::class, 'update'])->name('employees.update');
+        Route::delete('/{employee}', [EmployeesController::class, 'destroy'])->name('employees.destroy');
+    });
+});
 //middlewares
 
 //Route::middleware([CheckIfAuth::class, ':admin'])->group(function () {
