@@ -6,22 +6,21 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\CompaniesController;
 
-$middleware = ['auth:web'];
+Route::middleware(['auth:web'])->group(function () {
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+    Route::get('/', function () {
+        return view('welcome');
+    })->name('home');
 
-Route::get('/register', [AuthController::class, 'registrationForm'])->name('register');
-Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+    Route::get('/register', [AuthController::class, 'registrationForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register'])->name('register.post');
 
-Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login']);
+    Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
+    Route::post('/login', [AuthController::class, 'login']);
 
-Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
+    Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
 
-// Group routes with the same middleware
-Route::middleware($middleware)->group(function () {
+    // Group routes with the same middleware
     Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
