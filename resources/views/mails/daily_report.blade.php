@@ -4,6 +4,6 @@
     Sot eshte data {{ now()->toDateString() }}, kane mbetur {{ now()->daysInMonth - now()->day }} dite deri ne fund te
     muajit. Ju lutem logoni oret e dites se djeshme!
 
-    Faleminderit,<br>
+    Faleminderit,
     ATIS Software Company
 @endcomponent

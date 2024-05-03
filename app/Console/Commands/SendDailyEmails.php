@@ -2,20 +2,24 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
-use Illuminate\Contracts\Queue\ShouldQueue;
+use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\DailyReport;
+use App\Models\Employee;
 
-class SendDailyEmails extends Mailable
+class SendDailyEmails extends Command
 {
-    use Queueable, SerializesModels;
     protected $signature = 'emails:send';
     protected $description = 'Send daily emails to employees';
 
-    public function build()
+    public function handle()
     {
-        return $this->markdown('mails.daily_report')
-            ->subject('Daily Report');
+        $employees = Employee::all();
+
+        foreach ($employees as $employee) {
+            Mail::to($employee->email)->send(new DailyReport($employee));
+        }
+
+        $this->info('Daily emails sent successfully.');
     }
 }
