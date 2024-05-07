@@ -103,7 +103,9 @@
             <h1>List of Companies</h1>
 
             <div class="mb-3">
-                <a href="{{ route('companies.create') }}" class="btn btn-primary">Create New Company</a>
+                @if (Auth::user()->hasRole('admin'))
+                    <a href="{{ route('companies.create') }}" class="btn btn-primary">Create New Company</a>
+                @endif
             </div>
 
             <!-- Button to toggle visibility of companies created in the last 10 days -->
@@ -121,7 +123,9 @@
                             <th>Employee</th>
                             <th>Logo</th>
                             <th>Website</th>
-                            <th>Actions</th>
+                            @if (Auth::user()->hasRole('admin'))
+                                <th>Actions</th>
+                            @endif
                         </tr>
                     </thead>
 
@@ -151,14 +155,19 @@
                                 </td>
                                 <td><a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></td>
                                 <td>
-                                    <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-primary">Edit</a>
-                                    <form action="{{ route('companies.destroy', $company->id) }}" method="POST"
-                                        style="display: inline-block;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger"
-                                            onclick="return confirm('Are you sure you want to delete this company?')">Delete</button>
-                                    </form>
+                                    @if (Auth::user()->hasRole('admin'))
+                                        <a href="{{ route('companies.edit', $company->id) }}"
+                                            class="btn btn-primary">Edit</a>
+                                    @endif
+                                    @if (Auth::user()->hasRole('admin'))
+                                        <form action="{{ route('companies.destroy', $company->id) }}" method="POST"
+                                            style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger"
+                                                onclick="return confirm('Are you sure you want to delete this company?')">Delete</button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -182,7 +191,9 @@
                             <th>Employee</th>
                             <th>Logo</th>
                             <th>Website</th>
-                            <th>Actions</th>
+                            @if (Auth::user()->hasRole('admin'))
+                                <th>Actions</th>
+                            @endif
                         </tr>
                     </thead>
 
@@ -212,14 +223,19 @@
                                 </td>
                                 <td><a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></td>
                                 <td>
-                                    <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-primary">Edit</a>
-                                    <form action="{{ route('companies.destroy', $company->id) }}" method="POST"
-                                        style="display: inline-block;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger"
-                                            onclick="return confirm('Are you sure you want to delete this company?')">Delete</button>
-                                    </form>
+
+                                    @if (Auth::user()->hasRole('admin'))
+                                        <a href="{{ route('companies.edit', $company->id) }}"
+                                            class="btn btn-primary">Edit</a>
+
+                                        <form action="{{ route('companies.destroy', $company->id) }}" method="POST"
+                                            style="display: inline-block;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger"
+                                                onclick="return confirm('Are you sure you want to delete this company?')">Delete</button>
+                                        </form>
+                                    @endif
                                 </td>
                             </tr>
                         @endforeach
@@ -237,7 +253,9 @@
                         <th>Employee</th>
                         <th>Logo</th>
                         <th>Website</th>
-                        <th>Actions</th>
+                        @if (Auth::user()->hasRole('admin'))
+                            <th>Actions</th>
+                        @endif
                     </tr>
                 </thead>
 
@@ -267,13 +285,17 @@
                             </td>
                             <td><a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></td>
                             <td>
-                                <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-primary">Edit</a>
+                                @if (Auth::user()->hasRole('admin'))
+                                    <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-primary">Edit</a>
+                                @endif
                                 <form action="{{ route('companies.destroy', $company->id) }}" method="POST"
                                     style="display: inline-block;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Are you sure you want to delete this company?')">Delete</button>
+                                    @if (Auth::user()->hasRole('admin'))
+                                        <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Are you sure you want to delete this company?')">Delete</button>
+                                    @endif
                                 </form>
                             </td>
                         </tr>
