@@ -96,6 +96,12 @@
     button[type="submit"]:hover {
         background-color: #45a049;
     }
+
+    .error {
+        color: red;
+        font-size: 16px;
+    }
+</style>
 </style>
 @extends('layouts.layout') @section('content')
 
@@ -154,14 +160,25 @@
                         @method('PUT')
 
                         <label for="first_name">First Name:</label>
-                        <input type="text" name="first_name" id="first_name" value="{{ $employee->first_name }}">
-
+                        <input type="text" name="first_name" id="first_name"
+                            value="{{ old('first_name', $employee->first_name) }}">
+                        @error('first_name')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
+                        <br>
                         <label for="last_name">Last Name:</label>
-                        <input type="text" name="last_name" id="last_name" value="{{ $employee->last_name }}">
-
+                        <input type="text" name="last_name" id="last_name"
+                            value="{{ old('last_name', $employee->last_name) }}">
+                        @error('last_name')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
+                        <br>
                         <label for="email">Email:</label>
-                        <input type="email" name="email" id="email" value="{{ $employee->email }}">
-
+                        <input type="email" name="email" id="email" value="{{ old('email', $employee->email) }}">
+                        @error('email')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
+                        <br>
                         {{-- <label for="phone">Phone:</label>
                 <input type="text" name="phone" id="phone" value="{{ $employee->phone }}"> --}}
                         <label for="phone">Phone:</label>

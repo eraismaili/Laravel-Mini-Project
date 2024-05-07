@@ -181,17 +181,37 @@
                 <h1>Create Employee</h1>
                 <form action="{{ route('employees.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <label for="first_name">First Name:</label>
-                    <input type="text" name="first_name" id="first_name">
+                    <div class="form-group">
+                        <label for="first_name">First Name:</label>
+                        <input type="text" name="first_name" id="first_name" class="form-control">
+                        @error('first_name')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
 
-                    <label for="last_name">Last Name:</label>
-                    <input type="text" name="last_name" id="last_name">
+                    <div class= "form-group">
+                        <label for="last_name">Last Name:</label>
+                        <input type="text" name="last_name" id="last_name" class="form-control">
+                        @error('last_name')
+                            <div class="text-danger">{{ $message }} </div>
+                        @enderror
+                    </div>
 
-                    <label for="email">Email:</label>
-                    <input type="email" name="email" id="email">
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" name="email" id="email" class="form-control">
+                        @error('email')
+                            <div class="text-danger">{{ $message }} </div>
+                        @enderror
+                    </div>
 
-                    <label for="phone">Phone:</label>
-                    <input type="text" name="phone" id="phone">
+                    <div class="form-group">
+                        <label for="phone">Phone:</label>
+                        <input type="text" name="phone" id="phone" class="form-control">
+                        @error('phone')
+                            <div class="text-danger">{{ $message }} </div>
+                        @enderror
+                    </div>
 
                     <label for="company_id">Company:</label>
                     <select name="company_id" id="company_id" class="form-control">

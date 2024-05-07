@@ -174,17 +174,32 @@
                 <form action="{{ route('companies.store') }}" method="POST" enctype="multipart/form-data">
 
                     @csrf
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name"><br>
+                    <div class="form-group">
+                        <label for="name">Name:</label>
+                        <input type="text" id="name" name="name" class="form-control">
+                        @error('name')
+                            <div class="text-danger">{{ $message }} </div>
+                        @enderror
+                    </div>
 
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email"><br>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" class="form-control">
+                        @error('email')
+                            <div class="text-danger">{{ $message }} </div>
+                        @enderror
+                    </div>
 
                     <label for="logo">Logo:</label>
                     <input type="file" id="logo" name="logo"><br>
 
-                    <label for="website">Website:</label>
-                    <input type="text" id="website" name="website"><br>
+                    <div class= "form-group">
+                        <label for="website">Website:</label>
+                        <input type="text" id="website" name="website" class="form-control">
+                        @error('website')
+                            <div class="text-danger">{{ $message }} </div>
+                        @enderror
+                    </div>
 
                     <button type="submit">Create</button>
                 </form>

@@ -63,6 +63,11 @@
         background-color: #f7e4f8ef !important;
         color: #212529 !important;
     }
+
+    .error {
+        color: red;
+        font-size: 16px;
+    }
 </style>
 
 @extends('layouts.layout') @section('content')
@@ -121,12 +126,18 @@
                     <div class="form-group">
                         <label for="name">Name:</label>
                         <input type="text" class="form-control" id="name" name="name"
-                            value="{{ $company->name }}" required>
+                            value="{{ old('name', $company->name) }}">
+                        @error('name')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="email">Email:</label>
                         <input type="email" class="form-control" id="email" name="email"
-                            value="{{ $company->email }}" required>
+                            value="{{ old('email', $company->email) }}">
+                        @error('email')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
                     <div class="form-group">
                         <label for="logo">Logo:</label>
@@ -135,7 +146,10 @@
                     <div class="form-group">
                         <label for="website">Website:</label>
                         <input type="url" class="form-control" id="website" name="website"
-                            value="{{ $company->website }}">
+                            value="{{ old('website', $company->website) }}">
+                        @error('website')
+                            <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     <button type="submit" class="btn btn-primary">Submit</button>
