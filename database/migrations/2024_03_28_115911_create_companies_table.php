@@ -14,7 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name')->required;
             $table->string('email')->nullable;
-            $table->string('logo')->nullable; //me kqyr qysh duhet me add si foto
+            $table->string('logo')->nullable;
             $table->string('website')->nullable()->url;
             $table->timestamps();
         });

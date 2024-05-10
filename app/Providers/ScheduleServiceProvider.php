@@ -15,7 +15,7 @@ class ScheduleServiceProvider extends EventServiceProvider
 
         $this->app->booted(function () {
             $schedule = $this->app->make(Schedule::class);
-            $schedule->command('emails:send')->dailyAt('08:00');
+            $schedule->command('send:email')->dailyAt('8:00');
         });
     }
 }

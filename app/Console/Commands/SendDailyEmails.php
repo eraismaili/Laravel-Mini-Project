@@ -9,7 +9,7 @@ use App\Models\Employee;
 
 class SendDailyEmails extends Command
 {
-    protected $signature = 'emails:send';
+    protected $signature = 'send:email';
     protected $description = 'Send daily emails to employees';
 
     public function handle()

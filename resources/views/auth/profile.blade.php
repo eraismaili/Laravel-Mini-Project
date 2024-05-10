@@ -149,6 +149,8 @@
                             <a class="dropdown-item" href="{{ route('profile.show') }}">View Profile</a>
                             <a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a>
                             <a class="dropdown-item" href="{{ route('profile.update-password.form') }}">Update Password</a>
+                            <a class="dropdown-item" href="{{ route('companies.index') }}">Companies</a>
+
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button type="submit" class="dropdown-item">Logout</button>

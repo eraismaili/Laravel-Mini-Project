@@ -146,12 +146,9 @@
                                     @endforelse
                                 </td>
                                 <td>
-                                    @if ($company->logo)
-                                        <img src="{{ asset('storage/app/public/images' . $company->logo) }}"
-                                            alt="Company Logo" width="50">
-                                    @else
-                                        No Logo
-                                    @endif
+                                    <img src="{{ asset('storage/images/' . ($company->logo ?? 'atis.png')) }}"
+                                        alt="Companyy Logo" width="50">
+
                                 </td>
                                 <td><a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></td>
                                 <td>
@@ -214,12 +211,8 @@
                                     @endforelse
                                 </td>
                                 <td>
-                                    @if ($company->logo)
-                                        <img src="{{ asset('storage/app/public/images' . $company->logo) }}"
-                                            alt="Company Logo" width="50">
-                                    @else
-                                        No Logo
-                                    @endif
+                                    <img src="{{ asset('storage/images/' . ($company->logo ?? 'atis.png')) }}"
+                                        alt="Companyy Logo" width="50">
                                 </td>
                                 <td><a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></td>
                                 <td>
@@ -276,12 +269,8 @@
                                 @endforelse
                             </td>
                             <td>
-                                @if ($company->logo)
-                                    <img src="{{ asset('storage/images/' . $company->logo) }}" alt="Company Logo"
-                                        width="50">
-                                @else
-                                    No Logo
-                                @endif
+                                <img src="{{ asset('storage/images/' . ($company->logo ?? 'atis.png')) }}"
+                                    alt="Companyy Logo" width="50">
                             </td>
                             <td><a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></td>
                             <td>
