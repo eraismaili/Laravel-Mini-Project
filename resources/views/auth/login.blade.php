@@ -83,6 +83,7 @@
     @guest
 
         <body>
+
             <header>
                 <nav>
                     <ul>
@@ -92,6 +93,21 @@
                     </ul>
                 </nav>
             </header>
+
+            <form action="{{ route('language.change.post') }}" method="POST">
+                @csrf
+                <select name="language" onchange="this.form.submit()">
+                    <option value="en" {{ app()->getLocale() === 'en' ? 'selected' : '' }}>English</option>
+                    <option value="al" {{ app()->getLocale() === 'al' ? 'selected' : '' }}>Albanian</option>
+                </select>
+            </form>
+            @if (App::getLocale() === 'en')
+                <h1>Welcome</h1>
+            @else
+                <h1>Mirësevini</h1>
+            @endif
+
+
             <div class="row justify-content-center">
                 <div class="col-12 col-sm-8 col-md-6">
                     <form class="form mt-5 bg-light p-4 rounded" action="{{ route('login') }}" method="post">
@@ -115,11 +131,11 @@
                         @endif
 
                         <div class="form-group mt-3">
-                            <label for="email" class="text-dark">Email:</label><br>
+                            <label for="email" class="text-dark">{{ __('login.email') }}:</label><br>
                             <input type="email" name="email" id="email" class="form-control">
                         </div>
                         <div class="form-group mt-3">
-                            <label for="password" class="text-dark">Password:</label><br>
+                            <label for="password" class="text-dark">{{ __('login.password') }}:</label><br>
                             <input type="password" name="password" id="password" class="form-control">
                         </div>
                         <div class="form-group mt-4">

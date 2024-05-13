@@ -91,20 +91,21 @@
                     </ul>
                 </nav>
             </header>
+
             <div class="row justify-content-center">
                 <div class="col-12 col-sm-8 col-md-6">
                     <form class="form mt-5 bg-light p-4 rounded" action="{{ route('register') }}" method="post">
                         @csrf
                         <h3 class="text-center text-dark mb-4">Register</h3>
                         <div class="form-group">
-                            <label for="name" class="text-dark">Name:</label><br>
+                            <label for="name" class="text-dark">{{ __('register.name') }}:</label><br>
                             <input type="text" name="name" id="name" class="form-control">
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group mt-3">
-                            <label for="last_name" class="text-dark">Last Name:</label><br>
+                            <label for="last_name" class="text-dark">{{ __('register.lastname') }}:</label><br>
                             <input type="text" name="last_name" id="last_name" class="form-control">
                             @error('last_name')
                                 <span class="text-danger">{{ $message }}</span>

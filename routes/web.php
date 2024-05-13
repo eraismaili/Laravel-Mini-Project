@@ -16,6 +16,9 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.po
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::get('/change-language/{language}', [AuthController::class, 'changeLanguage'])->name('language.change.get');
+Route::post('/change-language', [AuthController::class, 'changeLanguage'])->name('language.change.post');
+
 Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
 
 // Group routes with the same middleware

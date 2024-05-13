@@ -9,10 +9,23 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Employee;
 use App\Models\Company;
+use Illuminate\Support\Facades\Session;
 
 
 class AuthController extends Controller
 {
+    public function changeLanguage(Request $request)
+    {
+
+        $language = $request->input('language');
+
+        if (!in_array($language, ['en', 'al'])) {
+            abort(400, 'Invalid language selection');
+        }
+        Session::put('locale', $language);
+        return redirect()->back();
+    }
+
     public function registrationForm()
     {
         $companies = Company::all();
@@ -37,8 +50,12 @@ class AuthController extends Controller
         $employee->last_name = $request->input('last_name');
         $employee->email = $user->email;
         $employee->phone = $request->input('phone');
-        $employee->company_id = $companyId;
+        $employee->company_id = $validatedData['company_id'];
         $employee->save();
+
+        $user->employee_id = $employee->id;
+        $user->save();
+
         $user->assignRole('user');
 
         return redirect()->route('login')->with('success', 'Registration successful!');
@@ -65,4 +82,5 @@ class AuthController extends Controller
         Auth::logout();
         return redirect()->route('login');
     }
+
 }
