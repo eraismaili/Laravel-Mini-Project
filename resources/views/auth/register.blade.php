@@ -10,13 +10,6 @@
         background-repeat: no-repeat;
     }
 
-    header {
-        background-color: rgba(51, 51, 51, 0.8);
-        color: #fff;
-        padding: 10px 0;
-        text-align: center;
-    }
-
     header nav ul {
         list-style: none;
         padding: 0;
@@ -49,15 +42,14 @@
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
-    footer {
-        background-color: rgba(51, 51, 51, 0.8);
-        color: #fff;
-        padding: 10px 0;
-        text-align: center;
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-    }
+    /* footer { */
+
+    /* padding: 10px 0; */
+    /* text-align: center; */
+    /* position: fixed; */
+    /* bottom: 0; */
+    /* width: 100%; */
+    /* } */
 
     .form {
         background-color: #f7e4f8ef !important;
@@ -83,12 +75,28 @@
 
         <body>
             <header>
-                <nav>
-                    <ul>
-                        <li><a href="{{ route('home') }}">Home</a></li>
-                        <li><a href="{{ route('register') }}">Register</a></li>
-                        <li><a href="{{ route('login') }}">Login</a></li>
-                    </ul>
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+                    <div class="container-fluid">
+                        <div class="collapse navbar-collapse" id="navbarNav">
+                            <ul class="navbar-nav mr-auto">
+                                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                                <li class="nav-item active"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                            </ul>
+                            <ul class="navbar-nav">
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Language
+                                    </a>
+                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <a class="dropdown-item" href="locale/en">English</a>
+                                        <a class="dropdown-item" href="locale/al">Albanian</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </nav>
             </header>
 
@@ -112,28 +120,28 @@
                             @enderror
                         </div>
                         <div class="form-group mt-3">
-                            <label for="phone" class="text-dark">Phone:</label><br>
+                            <label for="phone" class="text-dark">{{ __('register.phone') }}:</label><br>
                             <input type="text" name="phone" id="phone" class="form-control">
                             @error('phone')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group mt-3">
-                            <label for="email" class="text-dark">Email:</label><br>
+                            <label for="email" class="text-dark">{{ __('register.email') }}:</label><br>
                             <input type="email" name="email" id="email" class="form-control">
                             @error('email')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group mt-3">
-                            <label for="password" class="text-dark">Password:</label><br>
+                            <label for="password" class="text-dark">{{ __('register.password') }}:</label><br>
                             <input type="password" name="password" id="password" class="form-control">
                             @error('password')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group mt-3">
-                            <label for="confirm-password" class="text-dark">Confirm Password:</label><br>
+                            <label for="confirm-password" class="text-dark">{{ __('register.confirm-password') }}:</label><br>
                             <input type="password" name="password_confirmation" id="confirm-password" class="form-control">
                             @error('confirm-password')
                                 <span class="text-danger">{{ $message }}</span>
@@ -160,13 +168,20 @@
                     </form>
                 </div>
             </div>
-            <footer>
-                <p>&copy; 2024 Laravel Project. All rights reserved.</p>
+            <footer class="footer mt-auto py-3 bg-dark text-light">
+                <div class="container text-center">
+                    <p>&copy; 2024 Laravel Project. All rights reserved.</p>
+                </div>
             </footer>
-            </div>
         @else
             <script>
                 window.location = "{{ route('profile.show') }}";
             </script>
         @endguest
     @endsection
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+
+</html>

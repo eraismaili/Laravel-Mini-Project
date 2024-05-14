@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\CompaniesController;
+use App\Http\Controllers\LocaleController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,8 +17,6 @@ Route::post('/register', [AuthController::class, 'register'])->name('register.po
 Route::get('/login', [AuthController::class, 'loginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::get('/change-language/{language}', [AuthController::class, 'changeLanguage'])->name('language.change.get');
-Route::post('/change-language', [AuthController::class, 'changeLanguage'])->name('language.change.post');
 
 Route::post('/logout', [AuthController::class, 'destroy'])->name('logout');
 
@@ -61,3 +60,4 @@ Route::middleware(['auth:web'])->group(function () {
 //   Route::get('/companies', [CompaniesController::class, 'index']);
 //   Route::post('/companies', [CompaniesController::class, 'store']);
 //});
+Route::get('locale/{lang}', [LocaleController::class, 'setLocale'])->name('language.change.post');

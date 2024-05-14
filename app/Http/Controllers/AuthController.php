@@ -10,21 +10,11 @@ use App\Models\User;
 use App\Models\Employee;
 use App\Models\Company;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\App;
 
 
 class AuthController extends Controller
 {
-    public function changeLanguage(Request $request)
-    {
-
-        $language = $request->input('language');
-
-        if (!in_array($language, ['en', 'al'])) {
-            abort(400, 'Invalid language selection');
-        }
-        Session::put('locale', $language);
-        return redirect()->back();
-    }
 
     public function registrationForm()
     {
