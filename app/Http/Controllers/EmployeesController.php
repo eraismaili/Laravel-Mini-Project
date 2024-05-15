@@ -8,6 +8,7 @@ use App\Models\Company;
 use App\Models\Employee;
 use App\Http\Requests\EmployeeRequest;
 use Illuminate\Routing\Controller;
+use Illuminate\Http\Request;
 
 
 class EmployeesController extends Controller
@@ -19,11 +20,22 @@ class EmployeesController extends Controller
         $this->middleware(['permission:edit-users'], ['only' => ['edit', 'update']]);
         $this->middleware(['permission:delete-users'], ['only' => ['destroy']]);
     }
-    public function index()
+    public function index(Request $request)
     {
-        $employees = Employee::paginate(5);
+        $search = $request->input('search');
+
+        $employeesQuery = Employee::query()->with('company');
+        if ($search) {
+            $employeesQuery->where('name', 'LIKE', "%$search%")
+                ->orWhereHas('company', function ($query) use ($search) {
+                    $query->where('name', 'LIKE', "%$search%");
+                });
+        }
+        $employees = $employeesQuery->paginate(5)->appends(['search' => $search]);
+
         return view('employees.index', compact('employees'));
     }
+
     public function create()
     {
         $companies = Company::all();
