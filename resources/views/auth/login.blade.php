@@ -4,12 +4,11 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        background-image: url('/images/background.jpg');
+        background-image: url('/images/pic.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
     }
-
     header nav ul {
         list-style: none;
         padding: 0;
@@ -44,7 +43,7 @@
     }
 
     footer {
-        background-color: rgba(51, 51, 51, 0.8);
+        background-color:  #343a40;
         color: #fff;
         padding: 10px 0;
         text-align: center;

@@ -4,7 +4,7 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        background-image: url('/images/background.jpg');
+        background-image: url('/images/pic.jpg');
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
@@ -42,14 +42,15 @@
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
     }
 
-    /* footer { */
+    footer {
+            background-color: #343a40;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+            bottom: 0;
+            width: 100%;
+        }
 
-    /* padding: 10px 0; */
-    /* text-align: center; */
-    /* position: fixed; */
-    /* bottom: 0; */
-    /* width: 100%; */
-    /* } */
 
     .form {
         background-color: #f7e4f8ef !important;
@@ -66,6 +67,7 @@
         background-color: #72319c;
         border-color: #851bcc;
     }
+    
 </style>
 
 @extends('layouts.layout')
@@ -168,11 +170,6 @@
                     </form>
                 </div>
             </div>
-            <footer class="footer mt-auto py-3 bg-dark text-light">
-                <div class="container text-center">
-                    <p>&copy; 2024 Laravel Project. All rights reserved.</p>
-                </div>
-            </footer>
         @else
             <script>
                 window.location = "{{ route('profile.show') }}";
