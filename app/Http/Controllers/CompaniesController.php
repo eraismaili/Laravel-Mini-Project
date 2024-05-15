@@ -27,18 +27,22 @@ class CompaniesController extends Controller
         $this->middleware(['permission:edit-companies'], ['only' => ['edit', 'update']]);
         $this->middleware(['permission:delete-companies'], ['only' => ['destroy']]);
     }
-    public function index()
-    {
-        $recentlyCreatedCompanies = Company::createdLastTenDays()->get();
-        $companiesWithMoreThanTwoEmployees = Company::hasMoreThanTwoEmployees()->get();
-        $companies = Company::paginate(5);
+    public function index(Request $request)
+{
+    $search = $request->input('search');
+    $recentlyCreatedCompanies = Company::createdLastTenDays()->get();
+    $companiesWithMoreThanTwoEmployees = Company::hasMoreThanTwoEmployees()->get();
+    $companies = Company::where('name', 'LIKE', "%$search%")
+                        ->paginate(5)
+                        ->appends(['search' => $search]);
 
-        return view('companies.index', [
-            'recentlyCreatedCompanies' => $recentlyCreatedCompanies,
-            'companiesWithMoreThanTwoEmployees' => $companiesWithMoreThanTwoEmployees,
-            'companies' => $companies,
-        ]);
-    }
+    return view('companies.index', [
+        'recentlyCreatedCompanies' => $recentlyCreatedCompanies,
+        'companiesWithMoreThanTwoEmployees' => $companiesWithMoreThanTwoEmployees,
+        'companies' => $companies,
+    ]);
+}
+
 
     public function create()
     {

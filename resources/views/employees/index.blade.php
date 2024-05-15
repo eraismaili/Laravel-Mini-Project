@@ -114,6 +114,10 @@
     </script>
 
     <body>
+    <form action="{{ route('employees.index') }}" method="GET">
+    <input type="text" name="search" placeholder="Search Employees or Companies">
+    <button type="submit">Search</button>
+</form>
         <div class="container">
             <h1>List of Employees</h1>
             <a href="{{ route('employees.create') }}" class="btn btn-success mb-3">Create New Employee</a>
