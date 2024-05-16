@@ -9,6 +9,7 @@
         background-position: center;
         background-repeat: no-repeat;
     }
+
     header nav ul {
         list-style: none;
         padding: 0;
@@ -27,7 +28,7 @@
     }
 
     main {
-        padding: 20px;
+        /* padding: 20px; */
         text-align: center;
         position: relative;
         min-height: calc(100vh - 120px);
@@ -43,7 +44,7 @@
     }
 
     footer {
-        background-color:  #343a40;
+        background-color: #343a40;
         color: #fff;
         padding: 10px 0;
         text-align: center;

@@ -6,5 +6,6 @@ return [
     'email' => 'Email',
     'password' => 'Password',
     'confrim-password' => 'Confirm Password',
-    'company_id' => 'Company'
+    'company_id' => 'Company',
+    "register_button" => "Register",
 ];

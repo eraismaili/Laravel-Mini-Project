@@ -98,9 +98,9 @@
         </nav>
     </header>
     <form action="{{ route('companies.index') }}" method="GET">
-    <input type="text" name="search" placeholder="Search Companies">
-    <button type="submit">Search</button>
-</form>
+        <input type="text" name="search" placeholder="Search Companies">
+        <button type="submit">Search</button>
+    </form>
     <main>
         <div class="container">
             <h1>List of Companies</h1>

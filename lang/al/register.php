@@ -5,6 +5,7 @@ return [
     'phone' => 'Telefoni',
     'email' => 'Email',
     'password' => 'Fjalekalimi',
-    'confirm-password' => 'Konfirmo Fjalekalimi',
-    'company_id' => 'Kompania'
+    'confirm-password' => 'Konfirmo Fjalekalimin',
+    'company_id' => 'Kompania',
+    "register_button" => "Regjistrohu",
 ];

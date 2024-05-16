@@ -27,7 +27,7 @@
     }
 
     main {
-        padding: 20px;
+        /* padding: 20px; */
         text-align: center;
         position: relative;
         min-height: calc(100vh - 120px);
@@ -43,13 +43,13 @@
     }
 
     footer {
-            background-color: #343a40;
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
-            bottom: 0;
-            width: 100%;
-        }
+        background-color: #343a40;
+        color: #fff;
+        padding: 20px 0;
+        text-align: center;
+        bottom: 0;
+        width: 100%;
+    }
 
 
     .form {
@@ -67,7 +67,6 @@
         background-color: #72319c;
         border-color: #851bcc;
     }
-    
 </style>
 
 @extends('layouts.layout')
@@ -161,7 +160,7 @@
                             @enderror
                         </div>
                         <div class="form-group mt-4">
-                            <button type="submit" class="btn btn-primary btn-block">Register</button>
+                            <button type="submit" class="btn btn-primary btn-block">{{ __('register_button') }}</button>
                         </div>
                         <div class="text-center mt-3">
                             <span class="text-dark">Already have an account? </span><a href="{{ route('login') }}"

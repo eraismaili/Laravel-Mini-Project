@@ -61,87 +61,98 @@
 @extends('layouts.layout')
 
 @section('content')
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    @guest
-                        <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
-                    @else
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
-                            <div class="dropdown-menu" aria-labelledby="profileDropdown">
-                                <a class="dropdown-item" href="{{ route('profile.show') }}">View Profile</a>
-                                <a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a>
-                                <a class="dropdown-item" href="{{ route('profile.update-password.form') }}">Update Password</a>
-                                <a class="dropdown-item" href="{{ route('companies.index') }}">Companies</a>
 
-                                <form action="{{ route('logout') }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">Logout</button>
-                                </form>
-                            </div>
-                        </li>
-                        @if (Auth::user()->hasRole('admin'))
-                            <li class="nav-item"><a class="nav-link" href="{{ route('companies.index') }}">Companies</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('employees.index') }}">Employees</a></li>
-                        @endif
-                    @endguest
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Language
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="locale/en">English</a>
-                            <a class="dropdown-item" href="locale/al">Albanian</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mr-auto">
+                            @guest
+                                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                            @else
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@lang('profile.profile')</a>
+                                    <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                                        <a class="dropdown-item" href="{{ route('profile.show') }}">@lang('profile.view_profile')</a>
+                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">@lang('profile.edit_profile')</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('profile.update-password.form') }}">@lang('profile.update_password')</a>
 
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        var dropdownToggle = document.querySelector('.navbar .dropdown-toggle');
-        var dropdownMenu = document.querySelector('.navbar .dropdown-menu');
+                                        <a class="dropdown-item" href="{{ route('companies.index') }}">@lang('profile.companies')</a>
 
-        dropdownToggle.addEventListener('click', function() {
-            dropdownMenu.classList.toggle('show');
-        });
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">@lang('profile.logout')</button>
+                                        </form>
+                                    </div>
+                                </li>
+                                @if (Auth::user()->hasRole('admin'))
+                                    <li class="nav-item"><a class="nav-link"
+                                            href="{{ route('companies.index') }}">@lang('profile.companies')</a>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link"
+                                            href="{{ route('employees.index') }}">@lang('profile.employees')</a>
+                                    </li>
+                                @endif
+                            @endguest
+                        </ul>
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Language
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item"
+                                        href="{{ route('language.change.post', ['lang' => 'en']) }}">English</a>
+                                    <a class="dropdown-item"
+                                        href="{{ route('language.change.post', ['lang' => 'al']) }}">Albanian</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
 
-        window.addEventListener('click', function(event) {
-            if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                dropdownMenu.classList.remove('show');
-            }
-        });
-    });
-</script>
-
-    @auth
-        <h1>Welcome {{ Auth::user()->name }}</h1>
-        <p>Name: {{ Auth::user()->name }}</p>
-        <p>Email: {{ Auth::user()->email }}</p>
-        <div>
-            <a href="{{ route('profile.edit') }}" class="btn btn-primary">Edit Profile</a>
-            <a href="{{ route('profile.update-password.form') }}" class="btn btn-primary">Update Password</a>
-        </div>
-    @endauth
-
-    @guest
         <script>
-            window.location = "{{ route('login') }}";
+            document.addEventListener("DOMContentLoaded", function() {
+                var dropdownToggle = document.querySelector('.navbar .dropdown-toggle');
+                var dropdownMenu = document.querySelector('.navbar .dropdown-menu');
+
+                dropdownToggle.addEventListener('click', function() {
+                    dropdownMenu.classList.toggle('show');
+                });
+
+                window.addEventListener('click', function(event) {
+                    if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+                        dropdownMenu.classList.remove('show');
+                    }
+                });
+            });
         </script>
-    @endguest
-@endsection
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+
+        @auth
+            <h1>{{ __('profile.welcome_message', ['name' => Auth::user()->name]) }}</h1>
+            <p>{{ __('profile.name') }}: {{ Auth::user()->name }}</p>
+            <p>{{ __('profile.email') }}: {{ Auth::user()->email }}</p>
+            <div>
+                <a href="{{ route('profile.edit') }}" class="btn btn-primary">@lang('profile.edit_profile_button') </a>
+                <a href="{{ route('profile.update-password.form') }}" class="btn btn-primary">@lang('profile.update_password_button') </a>
+            </div>
+        @endauth
+
+        @guest
+            <script>
+                window.location = "{{ route('login') }}";
+            </script>
+        @endguest
+    @endsection
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
