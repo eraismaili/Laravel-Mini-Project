@@ -13,7 +13,8 @@
     header {
         background-color: #343a40;
         color: #fff;
-        padding: 5px 0; /* Adjusted padding */
+        padding: 5px 0;
+        /* Adjusted padding */
         text-align: center;
     }
 
@@ -105,53 +106,56 @@
 @extends('layouts.layout') @section('content')
 
     <body>
-    <header>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    @guest
-                        <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
-                    @else
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
-                            <div class="dropdown-menu" aria-labelledby="profileDropdown">
-                                <a class="dropdown-item" href="{{ route('profile.show') }}">View Profile</a>
-                                <a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a>
-                                <a class="dropdown-item" href="{{ route('profile.update-password.form') }}">Update Password</a>
-                                <a class="dropdown-item" href="{{ route('companies.index') }}">Companies</a>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mr-auto">
+                            @guest
+                                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                            @else
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
+                                    <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                                        <a class="dropdown-item" href="{{ route('profile.show') }}">View Profile</a>
+                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a>
+                                        <a class="dropdown-item" href="{{ route('profile.update-password.form') }}">Update
+                                            Password</a>
+                                        <a class="dropdown-item" href="{{ route('companies.index') }}">Companies</a>
 
-                                <form action="{{ route('logout') }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">Logout</button>
-                                </form>
-                            </div>
-                        </li>
-                        @if (Auth::user()->hasRole('admin'))
-                            <li class="nav-item"><a class="nav-link" href="{{ route('companies.index') }}">Companies</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('employees.index') }}">Employees</a></li>
-                        @endif
-                    @endguest
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Language
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="locale/en">English</a>
-                            <a class="dropdown-item" href="locale/al">Albanian</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-</header>
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">Logout</button>
+                                        </form>
+                                    </div>
+                                </li>
+                                @if (Auth::user()->hasRole('admin'))
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('companies.index') }}">Companies</a>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('employees.index') }}">Employees</a>
+                                    </li>
+                                @endif
+                            @endguest
+                        </ul>
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Language
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="locale/en">English</a>
+                                    <a class="dropdown-item" href="locale/al">Albanian</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 var dropdownToggle = document.querySelector('.dropdown-toggle');
@@ -177,21 +181,21 @@
                         @csrf
                         @method('PUT')
 
-                        <label for="first_name">First Name:</label>
+                        <label for="first_name">@lang('employees.first_name'):</label>
                         <input type="text" name="first_name" id="first_name"
                             value="{{ old('first_name', $employee->first_name) }}">
                         @error('first_name')
                             <span class="error">{{ $message }}</span>
                         @enderror
                         <br>
-                        <label for="last_name">Last Name:</label>
+                        <label for="last_name">@lang('employees.last_name'):</label>
                         <input type="text" name="last_name" id="last_name"
                             value="{{ old('last_name', $employee->last_name) }}">
                         @error('last_name')
                             <span class="error">{{ $message }}</span>
                         @enderror
                         <br>
-                        <label for="email">Email:</label>
+                        <label for="email">@lang('employees.email'):</label>
                         <input type="email" name="email" id="email" value="{{ old('email', $employee->email) }}">
                         @error('email')
                             <span class="error">{{ $message }}</span>
@@ -199,11 +203,11 @@
                         <br>
                         {{-- <label for="phone">Phone:</label>
                 <input type="text" name="phone" id="phone" value="{{ $employee->phone }}"> --}}
-                        <label for="phone">Phone:</label>
+                        <label for="phone">@lang('employees.phone'):</label>
                         <input type="text" name="phone" id="phone" value="{{ $employee->phone }}" readonly>
 
 
-                        <label for="company_id">Company:</label>
+                        <label for="company_id">@lang('employees.company'):</label>
                         <select name="company_id" id="company_id">
                             @foreach ($companies as $company)
                                 <option value="{{ $company->id }}"
@@ -213,7 +217,7 @@
                             @endforeach
                         </select>
 
-                        <button type="submit">Update</button>
+                        <button type="submit">@lang('employees.update_button')</button>
                     </form>
                 @else
                     <p>You do not have permission to edit this employee.</p>
@@ -223,5 +227,5 @@
 
         </html>
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

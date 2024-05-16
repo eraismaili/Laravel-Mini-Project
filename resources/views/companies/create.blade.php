@@ -58,7 +58,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            background-image: url('/images/background.jpg');
+            background-image: url('/images/pic.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
