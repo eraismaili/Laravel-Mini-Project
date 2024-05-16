@@ -48,7 +48,7 @@
 
 
         main h1 {
-            font-size: 3rem;
+            font-size: 2rem;
             color: #44363694;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }

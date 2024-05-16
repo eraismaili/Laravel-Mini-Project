@@ -1,19 +1,19 @@
 <style>
-    body {
+  body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        background-image: url('/images/background.jpg');
+        /* background-image: url('/images/.jpg'); */
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
     }
 
     header {
-        background-color: rgba(51, 51, 51, 0.8);
+        background-color: #343a40;
         color: #fff;
-        padding: 10px 0;
+        padding: 5px 0; /* Adjusted padding */
         text-align: center;
     }
 
@@ -34,7 +34,7 @@
     }
 
     main {
-        padding: 20px;
+        /* padding: 20px; */
         text-align: center;
         position: relative;
         min-height: calc(100vh - 120px);
@@ -50,7 +50,7 @@
     }
 
     footer {
-        background-color: rgba(51, 51, 51, 0.8);
+        background-color: #343a40;
         color: #fff;
         padding: 10px 0;
         text-align: center;
@@ -73,34 +73,53 @@
 @extends('layouts.layout') @section('content')
 
     <body>
-        <header>
-            <nav>
-                <ul>
+    <header>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
                     @guest
-                        <li><a href="{{ route('home') }}">Home</a></li>
-                        <li><a href="{{ route('register') }}">Register</a></li>
-                        <li><a href="{{ route('login') }}">Login</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
                     @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" id="profileDropdown" role="button" aria-haspopup="true"
-                                aria-expanded="false">Profile</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
                             <div class="dropdown-menu" aria-labelledby="profileDropdown">
                                 <a class="dropdown-item" href="{{ route('profile.show') }}">View Profile</a>
                                 <a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a>
                                 <a class="dropdown-item" href="{{ route('profile.update-password.form') }}">Update Password</a>
+                                <a class="dropdown-item" href="{{ route('companies.index') }}">Companies</a>
+
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
                                     <button type="submit" class="dropdown-item">Logout</button>
                                 </form>
+                            </div>
                         </li>
                         @if (Auth::user()->hasRole('admin'))
-                            <li><a href="{{ route('companies.index') }}">Companies</a></li>
-                            <li><a href="{{ route('employees.index') }}">Employees</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('companies.index') }}">Companies</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('employees.index') }}">Employees</a></li>
                         @endif
                     @endguest
                 </ul>
-            </nav>
-        </header>
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Language
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="locale/en">English</a>
+                            <a class="dropdown-item" href="locale/al">Albanian</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 var dropdownToggle = document.querySelector('.dropdown-toggle');

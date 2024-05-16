@@ -26,7 +26,7 @@ class EmployeesController extends Controller
 
         $employeesQuery = Employee::query()->with('company');
         if ($search) {
-            $employeesQuery->where('name', 'LIKE', "%$search%")
+            $employeesQuery->where('first_name', 'LIKE', "%$search%")
                 ->orWhereHas('company', function ($query) use ($search) {
                     $query->where('name', 'LIKE', "%$search%");
                 });
