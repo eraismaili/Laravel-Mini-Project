@@ -83,9 +83,9 @@
 
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav mr-auto">
-                                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
-                                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
-                                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">@lang('profile.home')</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">@lang('profile.register')</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">@lang('profile.login')</a></li>
                             </ul>
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
@@ -108,7 +108,7 @@
                 <div class="col-12 col-sm-8 col-md-6">
                     <form class="form mt-5 bg-light p-4 rounded" action="{{ route('login') }}" method="post">
                         @csrf
-                        <h3 class="text-center text-dark mb-4">Login</h3>
+                        <h3 class="text-center text-dark mb-4">@lang('login.login')</h3>
 
                         @if ($errors->any())
                             <div class="alert alert-danger">
@@ -135,11 +135,11 @@
                             <input type="password" name="password" id="password" class="form-control">
                         </div>
                         <div class="form-group mt-4">
-                            <button type="submit" class="btn btn-primary btn-block">Login</button>
+                            <button type="submit" class="btn btn-primary btn-block">@lang('login.login')</button>
                         </div>
                         <div class="text-center mt-3">
-                            <span class="text-dark">Don't have an account? </span><a href="{{ route('register') }}"
-                                class="text-primary">Register here</a>
+                            <span class="text-dark">@lang('login.dont_have_account') </span><a href="{{ route('register') }}"
+                                class="text-primary">@lang('login.register_here')</a>
                         </div>
                     </form>
                 </div>

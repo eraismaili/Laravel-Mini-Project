@@ -1,5 +1,5 @@
 <style>
-  body {
+    body {
         font-family: Arial, sans-serif;
         margin: 0;
         padding: 0;
@@ -62,50 +62,55 @@
 
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
-        <div class="container-fluid">
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
-                    @guest
-                        <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
-                    @else
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
-                            <div class="dropdown-menu" aria-labelledby="profileDropdown">
-                                <a class="dropdown-item" href="{{ route('profile.show') }}">View Profile</a>
-                                <a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a>
-                                <a class="dropdown-item" href="{{ route('profile.update-password.form') }}">Update Password</a>
-                                <a class="dropdown-item" href="{{ route('companies.index') }}">Companies</a>
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mr-auto">
+                        @guest
+                            <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                        @else
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@lang('profile.profile')</a>
+                                <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                                    <a class="dropdown-item" href="{{ route('profile.show') }}">@lang('profile.view_profile')</a>
+                                    <a class="dropdown-item" href="{{ route('profile.edit') }}">@lang('profile.edit_profile')</a>
+                                    <a class="dropdown-item"
+                                        href="{{ route('profile.update-password.form') }}">@lang('profile.update_password')</a>
+                                    <a class="dropdown-item" href="{{ route('companies.index') }}">@lang('profile.companies')</a>
 
-                                <form action="{{ route('logout') }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">Logout</button>
-                                </form>
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item">@lang('profile.logout')</button>
+                                    </form>
+                                </div>
+                            </li>
+                            @if (Auth::user()->hasRole('admin'))
+                                <li class="nav-item"><a class="nav-link"
+                                        href="{{ route('companies.index') }}">@lang('profile.companies')</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link"
+                                        href="{{ route('employees.index') }}">@lang('profile.employees')</a>
+                                </li>
+                            @endif
+                        @endguest
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Language
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="locale/en">English</a>
+                                <a class="dropdown-item" href="locale/al">Albanian</a>
                             </div>
                         </li>
-                        @if (Auth::user()->hasRole('admin'))
-                            <li class="nav-item"><a class="nav-link" href="{{ route('companies.index') }}">Companies</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('employees.index') }}">Employees</a></li>
-                        @endif
-                    @endguest
-                </ul>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                            role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Language
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                            <a class="dropdown-item" href="locale/en">English</a>
-                            <a class="dropdown-item" href="locale/al">Albanian</a>
-                        </div>
-                    </li>
-                </ul>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </nav>
+        </nav>
         </header>
         <script>
             document.addEventListener("DOMContentLoaded", function() {
@@ -123,7 +128,7 @@
                 });
             });
         </script>
-        <h1>Update Password</h1>
+        <h1>@lang('profile.update_password')</h1>
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -136,7 +141,7 @@
             @method('PUT')
 
             <div class="form-group">
-                <label for="current_password">Current Password</label>
+                <label for="current_password">@lang('profile.current_password')</label>
                 <input type="password" name="current_password" id="current_password" class="form-control" required>
                 @error('current_password')
                     <div class="text-danger">{{ $message }}</div>
@@ -144,7 +149,7 @@
             </div>
 
             <div class="form-group">
-                <label for="password">New Password</label>
+                <label for="password">@lang('profile.new_password')</label>
                 <input type="password" name="password" id="password" class="form-control" required>
                 @error('password')
                     <div class="text-danger">{{ $message }}</div>
@@ -152,7 +157,7 @@
             </div>
 
             <div class="form-group">
-                <label for="password_confirmation">Confirm New Password</label>
+                <label for="password_confirmation">@lang('profile.confirm_new_password')</label>
                 <input type="password" name="password_confirmation" id="password_confirmation" class="form-control"
                     required>
                 @error('password_confirmation')
@@ -160,7 +165,7 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary">Update Password</button>
+            <button type="submit" class="btn btn-primary">@lang('profile.update_password')</button>
         </form>
     @endsection
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>

@@ -74,24 +74,26 @@
                         @else
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@lang('profile.profile')</a>
                                 <div class="dropdown-menu" aria-labelledby="profileDropdown">
-                                    <a class="dropdown-item" href="{{ route('profile.show') }}">View Profile</a>
-                                    <a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a>
-                                    <a class="dropdown-item" href="{{ route('profile.update-password.form') }}">Update
-                                        Password</a>
+                                    <a class="dropdown-item" href="{{ route('profile.show') }}">@lang('profile.view_profile')</a>
+                                    <a class="dropdown-item" href="{{ route('profile.edit') }}">@lang('profile.edit_profile')</a>
+                                    <a class="dropdown-item"
+                                        href="{{ route('profile.update-password.form') }}">@lang('profile.update_password')</a>
                                     <a class="dropdown-item" href="{{ route('companies.index') }}">Companies</a>
 
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
-                                        <button type="submit" class="dropdown-item">Logout</button>
+                                        <button type="submit" class="dropdown-item">@lang('profile.logout')</button>
                                     </form>
                                 </div>
                             </li>
                             @if (Auth::user()->hasRole('admin'))
-                                <li class="nav-item"><a class="nav-link" href="{{ route('companies.index') }}">Companies</a>
+                                <li class="nav-item"><a class="nav-link"
+                                        href="{{ route('companies.index') }}">@lang('profile.companies')</a>
                                 </li>
-                                <li class="nav-item"><a class="nav-link" href="{{ route('employees.index') }}">Employees</a>
+                                <li class="nav-item"><a class="nav-link"
+                                        href="{{ route('employees.index') }}">@lang('profile.employees')</a>
                                 </li>
                             @endif
                         @endguest

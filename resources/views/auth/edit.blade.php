@@ -75,17 +75,17 @@
                             @else
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@lang('profile.profile')</a>
                                     <div class="dropdown-menu" aria-labelledby="profileDropdown">
-                                        <a class="dropdown-item" href="{{ route('profile.show') }}">View Profile</a>
-                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a>
-                                        <a class="dropdown-item" href="{{ route('profile.update-password.form') }}">Update
-                                            Password</a>
-                                        <a class="dropdown-item" href="{{ route('companies.index') }}">Companies</a>
+                                        <a class="dropdown-item" href="{{ route('profile.show') }}">@lang('profile.view_profile')</a>
+                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">@lang('profile.edit_profile')</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('profile.update-password.form') }}">@lang('profile.update_password')</a>
+                                        <a class="dropdown-item" href="{{ route('companies.index') }}">@lang('profile.companies')</a>
 
                                         <form action="{{ route('logout') }}" method="POST">
                                             @csrf
-                                            <button type="submit" class="dropdown-item">Logout</button>
+                                            <button type="submit" class="dropdown-item">@lang('profile.logout')</button>
                                         </form>
                                     </div>
                                 </li>
@@ -130,7 +130,7 @@
                 });
             });
         </script>
-        <h1>Edit Profile</h1>
+        <h1>@lang('profile.edit_profile')</h1>
 
         <form action="{{ route('profile.update') }}" method="POST">
             @csrf
@@ -154,7 +154,7 @@
                 @enderror
             </div>
 
-            <button type="submit" class="btn btn-primary">Update Profile</button>
+            <button type="submit" class="btn btn-primary">@lang('profile.update_profile')</button>
         </form>
 
         @if (session('success'))

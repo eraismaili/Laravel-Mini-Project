@@ -11,5 +11,12 @@ return [
     'companies' => 'Companies',
     'logout' => 'Logout',
     'profile' => 'Profile',
-    'employees' => 'Employees'
+    'employees' => 'Employees',
+    'home' => 'Home',
+    'register' => 'Register',
+    'login' => 'Login',
+    'update_profile' => 'Update Profile',
+    'current_password' => 'Current Password',
+    'new_password' => 'Fjalekalimi i ri',
+    'confirm_new_password' => 'Confrim New Password'
 ];

@@ -81,8 +81,9 @@
                         <div class="collapse navbar-collapse" id="navbarNav">
                             <ul class="navbar-nav mr-auto">
                                 <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
-                                <li class="nav-item active"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
-                                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                                <li class="nav-item active"><a class="nav-link"
+                                        href="{{ route('register') }}">@lang('register.register')</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">@lang('register.login')</a></li>
                             </ul>
                             <ul class="navbar-nav">
                                 <li class="nav-item dropdown">
@@ -105,7 +106,7 @@
                 <div class="col-12 col-sm-8 col-md-6">
                     <form class="form mt-5 bg-light p-4 rounded" action="{{ route('register') }}" method="post">
                         @csrf
-                        <h3 class="text-center text-dark mb-4">Register</h3>
+                        <h3 class="text-center text-dark mb-4">@lang('register.register')</h3>
                         <div class="form-group">
                             <label for="name" class="text-dark">{{ __('register.name') }}:</label><br>
                             <input type="text" name="name" id="name" class="form-control">
@@ -149,7 +150,7 @@
                             @enderror
                         </div>
                         <div class="form-group mt-3">
-                            <label for="company_id" class="text-dark">Company:</label><br>
+                            <label for="company_id" class="text-dark">@lang('register.company'):</label><br>
                             <select name="company_id" id="company_id" class="form-control">
                                 @foreach ($companies as $company)
                                     <option value="{{ $company->id }}">{{ $company->name }}</option>
@@ -160,11 +161,12 @@
                             @enderror
                         </div>
                         <div class="form-group mt-4">
-                            <button type="submit" class="btn btn-primary btn-block">{{ __('register_button') }}</button>
+                            <button type="submit"
+                                class="btn btn-primary btn-block">{{ __('register.register_button') }}</button>
                         </div>
                         <div class="text-center mt-3">
-                            <span class="text-dark">Already have an account? </span><a href="{{ route('login') }}"
-                                class="text-primary">Login here</a>
+                            <span class="text-dark">@lang('register.already_have_an_account') </span><a href="{{ route('login') }}"
+                                class="text-primary">@lang('register.register_button')</a>
                         </div>
                     </form>
                 </div>

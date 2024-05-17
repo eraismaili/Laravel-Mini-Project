@@ -11,6 +11,12 @@ return [
     'companies' => 'Kompanitë',
     'logout' => 'Shkycu',
     'profile' => 'Profili',
-    'employees' => 'Punonjësit'
-
+    'employees' => 'Punonjësit',
+    'home' => 'Home',
+    'register' => 'Regjistrohu',
+    'login' => 'Hyr',
+    'current_password' => 'Fjalekalimi aktual',
+    'new_password' => 'Fjalekalimi i ri',
+    'confirm_new_password' => 'Konfrimo Fjalekalimin e Ri',
+    'update_profile' => 'Perditeso Profilin'
 ];

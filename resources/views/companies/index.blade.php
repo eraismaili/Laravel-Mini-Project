@@ -81,17 +81,17 @@
                         <a href="#" class="dropdown-toggle" id="profileDropdown" role="button" aria-haspopup="true"
                             aria-expanded="false">Profile</a>
                         <div class="dropdown-menu" aria-labelledby="profileDropdown">
-                            <a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a>
-                            <a class="dropdown-item" href="{{ route('profile.update-password.form') }}">Update Password</a>
+                            <a class="dropdown-item" href="{{ route('profile.edit') }}">@lang('profile.edit_profile')</a>
+                            <a class="dropdown-item" href="{{ route('profile.update-password.form') }}">@lang('profile.update_password')</a>
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
-                                <button type="submit" class="dropdown-item">Logout</button>
+                                <button type="submit" class="dropdown-item">@lang('profile.logout')</button>
                             </form>
                         </div>
                     </li>
                     @if (Auth::user()->hasRole('admin'))
-                        <li><a href="{{ route('companies.index') }}">Companies</a></li>
-                        <li><a href="{{ route('employees.index') }}">Employees</a></li>
+                        <li><a href="{{ route('companies.index') }}">@lang('companies.companies')</a></li>
+                        <li><a href="{{ route('employees.index') }}">@lang('companies.employees')</a></li>
                     @endif
                 @endguest
             </ul>
@@ -103,16 +103,16 @@
     </form>
     <main>
         <div class="container">
-            <h1>List of Companies</h1>
+            <h1>@lang('companies.list_of_companies')</h1>
 
             <div class="mb-3">
                 @if (Auth::user()->hasRole('admin'))
-                    <a href="{{ route('companies.create') }}" class="btn btn-primary">Create New Company</a>
+                    <a href="{{ route('companies.create') }}" class="btn btn-primary">@lang('companies.create_new_company')</a>
                 @endif
             </div>
 
             <!-- Button to toggle visibility of companies created in the last 10 days -->
-            <button class="btn btn-secondary" id="toggleRecentCompanies">Show Companies Created in the Last 10 Days</button>
+            <button class="btn btn-secondary" id="toggleRecentCompanies">@lang('companies.show_last_companies')</button>
 
             <!-- Companies Created in the Last 10 Days Section (Initially hidden) -->
             <div id="recentCompanies" style="display: none;">
@@ -176,8 +176,7 @@
             </div>
 
             <!-- Button to toggle visibility of companies with more than two employees -->
-            <button class="btn btn-secondary" id="toggleCompaniesWithEmployees">Show Companies with More Than Two
-                Employees</button>
+            <button class="btn btn-secondary" id="toggleCompaniesWithEmployees">@lang('companies.show_companies')</button>
 
             <!-- Companies with More Than Two Employees Section (Initially hidden) -->
             <div id="companiesWithEmployees" style="display: none;">
@@ -239,18 +238,18 @@
                 </table>
             </div>
 
-            <h2>All Companies</h2>
+            <h2>@lang('companies.all_companies')</h2>
             <table class="table">
 
                 <thead>
                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Employee</th>
+                        <th>@lang('companies.name')</th>
+                        <th>@lang('companies.email')</th>
+                        <th>@lang('companies.employee')</th>
                         <th>Logo</th>
-                        <th>Website</th>
+                        <th>@lang('companies.website')</th>
                         @if (Auth::user()->hasRole('admin'))
-                            <th>Actions</th>
+                            <th>@lang('companies.actions')</th>
                         @endif
                     </tr>
                 </thead>
@@ -273,12 +272,13 @@
                             </td>
                             <td>
                                 <img src="{{ asset('storage/images/' . ($company->logo ?? 'atis.png')) }}"
-                                    alt="Companyy Logo" width="50">
+                                    alt="Company Logo" width="50">
                             </td>
                             <td><a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></td>
                             <td>
                                 @if (Auth::user()->hasRole('admin'))
-                                    <a href="{{ route('companies.edit', $company->id) }}" class="btn btn-primary">Edit</a>
+                                    <a href="{{ route('companies.edit', $company->id) }}"
+                                        class="btn btn-primary">@lang('companies.edit')</a>
                                 @endif
                                 <form action="{{ route('companies.destroy', $company->id) }}" method="POST"
                                     style="display: inline-block;">
@@ -286,7 +286,7 @@
                                     @method('DELETE')
                                     @if (Auth::user()->hasRole('admin'))
                                         <button type="submit" class="btn btn-danger"
-                                            onclick="return confirm('Are you sure you want to delete this company?')">Delete</button>
+                                            onclick="return confirm('Are you sure you want to delete this company?')">@lang('companies.delete')</button>
                                     @endif
                                 </form>
                             </td>
