@@ -109,42 +109,48 @@
                         <h3 class="text-center text-dark mb-4">@lang('register.register')</h3>
                         <div class="form-group">
                             <label for="name" class="text-dark">{{ __('register.name') }}:</label><br>
-                            <input type="text" name="name" id="name" class="form-control">
+                            <input type="text" name="name" id="name" class="form-control"
+                                value="{{ old('name') }}">
                             @error('name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group mt-3">
                             <label for="last_name" class="text-dark">{{ __('register.lastname') }}:</label><br>
-                            <input type="text" name="last_name" id="last_name" class="form-control">
+                            <input type="text" name="last_name" id="last_name" class="form-control"
+                                value="{{ old('last_name') }}">
                             @error('last_name')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group mt-3">
                             <label for="phone" class="text-dark">{{ __('register.phone') }}:</label><br>
-                            <input type="text" name="phone" id="phone" class="form-control">
+                            <input type="text" name="phone" id="phone" class="form-control"
+                                value="{{ old('phone') }}">
                             @error('phone')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group mt-3">
                             <label for="email" class="text-dark">{{ __('register.email') }}:</label><br>
-                            <input type="email" name="email" id="email" class="form-control">
+                            <input type="email" name="email" id="email" class="form-control"
+                                value="{{ old('email') }}">
                             @error('email')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group mt-3">
                             <label for="password" class="text-dark">{{ __('register.password') }}:</label><br>
-                            <input type="password" name="password" id="password" class="form-control">
+                            <input type="password" name="password" id="password" class="form-control"
+                                value="{{ old('password') }}">
                             @error('password')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
                         </div>
                         <div class="form-group mt-3">
                             <label for="confirm-password" class="text-dark">{{ __('register.confirm-password') }}:</label><br>
-                            <input type="password" name="password_confirmation" id="confirm-password" class="form-control">
+                            <input type="password" name="password_confirmation" id="confirm-password" class="form-control"
+                                value="{{ old('password_confirmation') }}">
                             @error('confirm-password')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror
@@ -153,7 +159,9 @@
                             <label for="company_id" class="text-dark">@lang('register.company'):</label><br>
                             <select name="company_id" id="company_id" class="form-control">
                                 @foreach ($companies as $company)
-                                    <option value="{{ $company->id }}">{{ $company->name }}</option>
+                                    <option value="{{ $company->id }}"
+                                        {{ old('company_id') == $company->id ? 'selected' : '' }}>{{ $company->name }}
+                                    </option>
                                 @endforeach
                             </select>
                             @error('company_id')

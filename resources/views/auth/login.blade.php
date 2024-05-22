@@ -128,7 +128,8 @@
 
                         <div class="form-group mt-3">
                             <label for="email" class="text-dark">@lang('login.email'):</label><br>
-                            <input type="email" name="email" id="email" class="form-control">
+                            <input type="email" name="email" id="email" class="form-control"
+                                value="{{ old('email') }}">
                         </div>
                         <div class="form-group mt-3">
                             <label for="password" class="text-dark">@lang('login.password'):</label><br>
