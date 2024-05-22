@@ -6,10 +6,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\LocaleController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
 
 Route::get('/register', [AuthController::class, 'registrationForm'])->name('register');
 Route::post('/register', [AuthController::class, 'register'])->name('register.post');
@@ -27,6 +29,8 @@ Route::middleware(['auth:web'])->group(function () {
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/profile/update-password', [ProfileController::class, 'showUpdatePasswordForm'])->name('profile.update-password.form');
     Route::put('/profile/update-password', [ProfileController::class, 'updatePassword'])->name('profile.update-password');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
 
     // Web page routes for Companies
 // Route::group(['middleware' => ['role:admin']], function () {

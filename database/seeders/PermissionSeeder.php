@@ -16,7 +16,9 @@ class PermissionSeeder extends Seeder
         'view-companies',
         'create-companies',
         'edit-companies',
-        'delete-companies'
+        'delete-companies',
+        'view-dashboard'
+
     ];
 
     public function run()
