@@ -13,7 +13,6 @@
             background-color: #f4f4f4;
         }
 
-
         h1 {
             font-size: 24px;
             margin-bottom: 20px;
@@ -64,13 +63,7 @@
             background-repeat: no-repeat;
         }
 
-        header {
-            background-color: rgba(51, 51, 51, 0.8);
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-
+        /*
         header nav ul {
             list-style: none;
             padding: 0;
@@ -85,7 +78,7 @@
         header nav ul li a {
             color: #fff;
             text-decoration: none;
-        }
+        } */
 
         main {
             padding: 20px;
@@ -117,39 +110,70 @@
             background-color: #f7e4f8ef !important;
             color: #212529 !important;
         }
-    </style>
 
-    @extends('layouts.layout') @section('content')
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    @extends('layouts.layout')
+
+    @section('content')
+    </head>
 
     <body>
         <header>
-            <nav>
-                <ul>
-                    @guest
-                        <li><a href="{{ route('home') }}">Home</a></li>
-                        <li><a href="{{ route('register') }}">Register</a></li>
-                        <li><a href="{{ route('login') }}">Login</a></li>
-                    @else
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" id="profileDropdown" role="button" aria-haspopup="true"
-                                aria-expanded="false">Profile</a>
-                            <div class="dropdown-menu" aria-labelledby="profileDropdown">
-                                <a class="dropdown-item" href="{{ route('profile.show') }}">View Profile</a>
-                                <a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a>
-                                <a class="dropdown-item" href="{{ route('profile.update-password.form') }}">Update Password</a>
-                                <form action="{{ route('logout') }}" method="POST">
-                                    @csrf
-                                    <button type="submit" class="dropdown-item">Logout</button>
-                                </form>
-                        </li>
-                        @if (Auth::user()->hasRole('admin'))
-                            <li><a href="{{ route('companies.index') }}">Companies</a></li>
-                            <li><a href="{{ route('employees.index') }}">Employees</a></li>
-                        @endif
-                    @endguest
-                </ul>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mr-auto">
+                            @guest
+                                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                            @else
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Profile</a>
+                                    <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                                        <a class="dropdown-item" href="{{ route('profile.show') }}">View Profile</a>
+                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a>
+                                        <a class="dropdown-item" href="{{ route('profile.update-password.form') }}">Update
+                                            Password</a>
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">Logout</button>
+                                        </form>
+                                    </div>
+                                </li>
+                                @if (Auth::user()->hasRole('admin'))
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('companies.index') }}">Companies</a>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('employees.index') }}">Employees</a>
+                                    </li>
+                                @endif
+                            @endguest
+                        </ul>
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                    role="button" data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">Language</a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="locale/en">English</a>
+                                    <a class="dropdown-item" href="locale/al">Albanian</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </nav>
         </header>
+
         <script>
             document.addEventListener("DOMContentLoaded", function() {
                 var dropdownToggle = document.querySelector('.dropdown-toggle');
@@ -166,44 +190,48 @@
                 });
             });
         </script>
-        </head>
 
-        <body>
-            <div class="container">
-                <h1>Create Company</h1>
-                <form action="{{ route('companies.store') }}" method="POST" enctype="multipart/form-data">
 
-                    @csrf
-                    <div class="form-group">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" class="form-control">
-                        @error('name')
-                            <div class="text-danger">{{ $message }} </div>
-                        @enderror
-                    </div>
+        <div class="container">
+            <h1>Create Company</h1>
+            <form action="{{ route('companies.store') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" class="form-control">
+                    @error('name')
+                        <div class="text-danger">{{ $message }} </div>
+                    @enderror
+                </div>
 
-                    <div class="form-group">
-                        <label for="email">Email:</label>
-                        <input type="email" id="email" name="email" class="form-control">
-                        @error('email')
-                            <div class="text-danger">{{ $message }} </div>
-                        @enderror
-                    </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" class="form-control">
+                    @error('email')
+                        <div class="text-danger">{{ $message }} </div>
+                    @enderror
+                </div>
 
+                <div class="form-group">
                     <label for="logo">Logo:</label>
-                    <input type="file" id="logo" name="logo"><br>
+                    <input type="file" id="logo" name="logo">
+                    @error('logo')
+                        <div class="text-danger">{{ $message }} </div>
+                    @enderror
+                </div>
 
-                    <div class= "form-group">
-                        <label for="website">Website:</label>
-                        <input type="text" id="website" name="website" class="form-control">
-                        @error('website')
-                            <div class="text-danger">{{ $message }} </div>
-                        @enderror
-                    </div>
+                <div class="form-group">
+                    <label for="website">Website:</label>
+                    <input type="text" id="website" name="website" class="form-control">
+                    @error('website')
+                        <div class="text-danger">{{ $message }} </div>
+                    @enderror
+                </div>
 
-                    <button type="submit">Create</button>
-                </form>
-            </div>
-        </body>
+                <button type="submit">Create</button>
+            </form>
+        </div>
+    </body>
 
     </html>
+@endsection

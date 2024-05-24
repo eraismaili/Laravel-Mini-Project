@@ -14,17 +14,8 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            background-color: lightblue;
-            background-image: url('/images/pic.png');
-            background-position: center;
-            /* Adjusted to bottom */
-            background-size: auto;
-            /* Cover the entire viewport */
-            background-repeat: no-repeat;
-            height: 100vh;
-            /* Ensure the body covers the entire viewport */
+            background-color: #f0f8ff;
         }
-
 
         header nav ul {
             list-style: none;
@@ -42,6 +33,10 @@
             text-decoration: none;
         }
 
+        header .navbar {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
         footer {
             background-color: #343a40;
             color: #fff;
@@ -57,68 +52,104 @@
         }
 
         main {
-            position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: calc(100vh - 60px);
+            /* Full height minus header height */
+            text-align: center;
         }
 
         h1 {
-            text-align: center;
-            /* Align the text to the center */
-            font-size: 3rem;
-            /* Increase font size */
-            color: black;
-            /* Change text color */
-            padding: 20px;
-            /* Add padding for better visibility */
-            border-radius: 10px;
-            /* Add rounded corners */
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #000;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.7);
+        }
+
+        .btn-custom {
+            background-color: #007bff;
+            color: #fff;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.2rem;
+            text-decoration: none;
             margin-top: 20px;
-            /* Adjust margin to create space below the header */
+            transition: background-color 0.3s;
+        }
+
+        .btn-custom:hover {
+            background-color: #0056b3;
+        }
+
+        .background-image {
+            background-image: url('/images/pic.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            width: 100%;
+            height: 50vh;
+            margin-top: 20px;
         }
     </style>
 </head>
-@extends('layouts.layout')
+</style>
+</head>
 
-@section('content')
+{{-- @extends('layouts.layout')
 
-    <body>
-        <header>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
-                <div class="container-fluid">
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">@lang('profile.home')</a></li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">@lang('profile.register')</a>
-                            </li>
-                            <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">@lang('profile.login')</a></li>
-                        </ul>
-                        <ul class="navbar-nav">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Language
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="locale/en">English</a>
-                                    <a class="dropdown-item" href="locale/al">Albanian</a>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+@section('content') --}}
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-dark p-3">
+            <div class="container-fluid">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">@lang('profile.home')</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">@lang('profile.register')</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">@lang('profile.login')</a></li>
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Language
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="locale/en">English</a>
+                                <a class="dropdown-item" href="locale/al">Albanian</a>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
-            </nav>
-        </header>
+            </div>
+        </nav>
+    </header>
 
-        <main>
-            <h1>@lang('welcome.employees_management_system')</h1>
-        </main>
+    <main>
+        <h1>@lang('welcome.employees_management_system')</h1>
+        <a href="{{ route('register') }}" class="btn-custom">Get Started</a>
+        <div class="background-image"></div>
+    </main>
 
-        <footer>
-            <p>&copy; 2024 Laravel Project. All rights reserved.</p>
-        </footer>
-        <!-- Bootstrap JS -->
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    </body>
+    <footer>
+        <p>&copy; 2024 Laravel Project. All rights reserved.</p>
+    </footer>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
 
-    </html>
+{{-- @endsection --}}
+
+</html>

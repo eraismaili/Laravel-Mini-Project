@@ -13,7 +13,6 @@
             background-repeat: no-repeat;
         }
 
-
         header nav ul {
             list-style: none;
             padding: 0;
@@ -31,10 +30,8 @@
         }
 
         main {
-            /* padding: 20px; */
             text-align: center;
             position: relative;
-            /* min-height: calc(100vh - 120px); */
             display: flex;
             justify-content: center;
             align-items: center;
@@ -60,7 +57,58 @@
             background-color: #f7e4f8ef !important;
             color: #212529 !important;
         }
+
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .search-container button:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-back {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #6c757d;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .btn-back:hover {
+            background-color: #5a6268;
+        }
+
+        .btn-back .arrow-left {
+            margin-right: 5px;
+            font-size: 18px;
+        }
     </style>
+
 
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
@@ -132,10 +180,15 @@
     </script>
 
     <body>
-        <form action="{{ route('employees.index') }}" method="GET">
-            <input type="text" name="search" placeholder="Search Employees or Companies">
-            <button type="submit">@lang('employees.search_button')</button>
-        </form>
+        <div class="search-container">
+            <form action="{{ route('employees.index') }}" method="GET">
+                <input type="text" name="search" placeholder="Search Employees or Companies">
+                <button type="submit">@lang('employees.search_button')</button>
+            </form>
+            <a href="{{ route('employees.index') }}" class="btn-back">
+                <span class="arrow-left">&#8592;</span> Back to Employees
+            </a>
+        </div>
         <div class="container">
             <h1>@lang('employees.list_of_employees')</h1>
             <a href="{{ route('employees.create') }}" class="btn btn-success mb-3">@lang('employees.create_new_employee')</a>
@@ -179,6 +232,7 @@
 
     </html>
 @endsection
+
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

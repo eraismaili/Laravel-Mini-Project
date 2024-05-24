@@ -67,6 +67,33 @@
             background-color: #f7e4f8ef !important;
             color: #212529 !important;
         }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .search-container input[type="text"] {
+            width: 300px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+
+        .search-container button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #0056b3;
+        }
     </style>
 
     <header>
@@ -101,6 +128,7 @@
         <input type="text" name="search" placeholder="Search Companies">
         <button type="submit">Search</button>
     </form>
+
     <main>
         <div class="container">
             <h1>@lang('companies.list_of_companies')</h1>

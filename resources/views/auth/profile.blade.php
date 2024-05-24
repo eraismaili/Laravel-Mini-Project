@@ -81,9 +81,7 @@
                                         <a class="dropdown-item" href="{{ route('profile.edit') }}">@lang('profile.edit_profile')</a>
                                         <a class="dropdown-item"
                                             href="{{ route('profile.update-password.form') }}">@lang('profile.update_password')</a>
-
                                         <a class="dropdown-item" href="{{ route('companies.index') }}">@lang('profile.companies')</a>
-
                                         <form action="{{ route('logout') }}" method="POST">
                                             @csrf
                                             <button type="submit" class="dropdown-item">@lang('profile.logout')</button>
@@ -93,11 +91,9 @@
                                 @if (Auth::user()->hasRole('admin'))
                                     <li class="nav-item"><a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a></li>
                                     <li class="nav-item"><a class="nav-link"
-                                            href="{{ route('companies.index') }}">@lang('profile.companies')</a>
-                                    </li>
+                                            href="{{ route('companies.index') }}">@lang('profile.companies')</a></li>
                                     <li class="nav-item"><a class="nav-link"
-                                            href="{{ route('employees.index') }}">@lang('profile.employees')</a>
-                                    </li>
+                                            href="{{ route('employees.index') }}">@lang('profile.employees')</a></li>
                                 @endif
                             @endguest
                         </ul>
@@ -120,23 +116,6 @@
             </nav>
         </header>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                var dropdownToggle = document.querySelector('.navbar .dropdown-toggle');
-                var dropdownMenu = document.querySelector('.navbar .dropdown-menu');
-
-                dropdownToggle.addEventListener('click', function() {
-                    dropdownMenu.classList.toggle('show');
-                });
-
-                window.addEventListener('click', function(event) {
-                    if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                        dropdownMenu.classList.remove('show');
-                    }
-                });
-            });
-        </script>
-
         @auth
             <h1>{{ __('profile.welcome_message', ['name' => Auth::user()->name]) }}</h1>
             <p>{{ __('profile.name') }}: {{ Auth::user()->name }}</p>
@@ -153,7 +132,4 @@
             </script>
         @endguest
     @endsection
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>

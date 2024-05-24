@@ -17,6 +17,6 @@ return [
     'login' => 'Login',
     'update_profile' => 'Update Profile',
     'current_password' => 'Current Password',
-    'new_password' => 'Fjalekalimi i ri',
+    'new_password' => 'New Password',
     'confirm_new_password' => 'Confrim New Password'
 ];
