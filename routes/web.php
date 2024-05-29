@@ -7,10 +7,19 @@ use App\Http\Controllers\EmployeesController;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\LocaleController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PayPalController;
 
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+
+Route::get('paypal/pay', function () {
+    return view('paypal');
+})->name('paypal.pay');
+
+Route::get('paypal', [PayPalController::class, 'payWithPayPal'])->name('paypal.payWithPayPal');
+Route::get('paypal/status', [PayPalController::class, 'payPalStatus'])->name('paypal.status');
 
 
 Route::get('/register', [AuthController::class, 'registrationForm'])->name('register');
@@ -55,6 +64,8 @@ Route::middleware(['auth:web'])->group(function () {
         Route::delete('/{employee}', [EmployeesController::class, 'destroy'])->name('employees.destroy');
     });
 });
+
+
 //middlewares
 
 //Route::middleware([CheckIfAuth::class, ':admin'])->group(function () {
