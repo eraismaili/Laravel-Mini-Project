@@ -69,89 +69,89 @@
         border-color: #851bcc;
     }
 </style>
-
 @extends('layouts.layout')
 
 @section('content')
     @guest
-
-        <body>
-
-            <header>
-                <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
-                    <div class="container-fluid">
-
-                        <div class="collapse navbar-collapse" id="navbarNav">
-                            <ul class="navbar-nav mr-auto">
-                                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">@lang('profile.home')</a></li>
-                                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">@lang('profile.register')</a></li>
-                                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">@lang('profile.login')</a></li>
-                            </ul>
-                            <ul class="navbar-nav">
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
-                                        role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Language
-                                    </a>
-                                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <a class="dropdown-item" href="locale/en">English</a>
-                                        <a class="dropdown-item" href="locale/al">Albanian</a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+                <div class="container-fluid">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">@lang('profile.home')</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">@lang('profile.register')</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">@lang('profile.login')</a></li>
+                        </ul>
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Language
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="locale/en">English</a>
+                                    <a class="dropdown-item" href="locale/al">Albanian</a>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
-                </nav>
-            </header>
-
-            <div class="row justify-content-center">
-                <div class="col-12 col-sm-8 col-md-6">
-                    <form class="form mt-5 bg-light p-4 rounded" action="{{ route('login') }}" method="post">
-                        @csrf
-                        <h3 class="text-center text-dark mb-4">@lang('login.login')</h3>
-
-                        @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
-                                    @foreach ($errors->all() as $error)
-                                        <li>{{ $error }} </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        @endif
-
-                        @if (session('error'))
-                            <div class="alert alert-danger">
-                                {{ session('error') }}
-                            </div>
-                        @endif
-
-                        <div class="form-group mt-3">
-                            <label for="email" class="text-dark">@lang('login.email'):</label><br>
-                            <input type="email" name="email" id="email" class="form-control"
-                                value="{{ old('email') }}">
-                        </div>
-                        <div class="form-group mt-3">
-                            <label for="password" class="text-dark">@lang('login.password'):</label><br>
-                            <input type="password" name="password" id="password" class="form-control">
-                        </div>
-                        <div class="form-group mt-4">
-                            <button type="submit" class="btn btn-primary btn-block">@lang('login.login')</button>
-                        </div>
-                        <div class="text-center mt-3">
-                            <span class="text-dark">@lang('login.dont_have_account') </span><a href="{{ route('register') }}"
-                                class="text-primary">@lang('login.register_here')</a>
-                        </div>
-                    </form>
                 </div>
+            </nav>
+        </header>
+
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-8 col-md-6">
+                <form class="form mt-5 bg-light p-4 rounded" action="{{ route('login') }}" method="post">
+                    @csrf
+                    <h3 class="text-center text-dark mb-4">@lang('login.login')</h3>
+
+                    @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
+                    @if (session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    <div class="form-group mt-3">
+                        <label for="email" class="text-dark">@lang('login.email'):</label><br>
+                        <input type="email" name="email" id="email" class="form-control" value="{{ old('email') }}">
+                    </div>
+                    <div class="form-group mt-3">
+                        <label for="password" class="text-dark">@lang('login.password'):</label><br>
+                        <input type="password" name="password" id="password" class="form-control">
+                    </div>
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-primary btn-block">@lang('login.login')</button>
+                    </div>
+                    <div class="text-center mt-3">
+                        <span class="text-dark">@lang('login.dont_have_account')</span> <a href="{{ route('register') }}"
+                            class="text-primary">@lang('login.register_here')</a>
+                    </div>
+                </form>
             </div>
-        @else
-            <script>
-                window.location = "{{ route('profile.show') }}";
-            </script>
-        @endguest
-    @endsection
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        </div>
+    @else
+        <script>
+            window.location = "{{ route('profile.show') }}";
+        </script>
+    @endguest
+@endsection
+
+@push('scripts')
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
+@endpush

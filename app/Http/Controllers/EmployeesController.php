@@ -9,6 +9,8 @@ use App\Models\Employee;
 use App\Http\Requests\EmployeeRequest;
 use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
+use App\Exports\EmployeesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class EmployeesController extends Controller
@@ -73,5 +75,8 @@ class EmployeesController extends Controller
         $employee->delete();
         return redirect()->route('employees.index')->with('success', 'Employee deleted successfully');
     }
-
+    public function export()
+    {
+        return Excel::download(new EmployeesExport, 'employees.xlsx');
+    }
 }

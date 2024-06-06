@@ -7,9 +7,10 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
 use App\Models\Employee;
-
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use App\Exports\CompaniesExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class CompaniesController extends Controller
 {
@@ -98,5 +99,9 @@ class CompaniesController extends Controller
     {
         $company->delete();
         return redirect()->route('companies.index')->with('success', 'Employee deleted successfully');
+    }
+    public function export()
+    {
+        return Excel::download(new CompaniesExport, 'companies.xlsx');
     }
 }

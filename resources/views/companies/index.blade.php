@@ -136,6 +136,7 @@
             <div class="mb-3">
                 @if (Auth::user()->hasRole('admin'))
                     <a href="{{ route('companies.create') }}" class="btn btn-primary">@lang('companies.create_new_company')</a>
+                    <a href="{{ route('companies.export') }}" class="btn btn-success mb-3">Download Excel</a>
                 @endif
             </div>
 

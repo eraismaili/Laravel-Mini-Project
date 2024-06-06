@@ -162,6 +162,7 @@
             </div>
         </nav>
     </header>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             var dropdownToggle = document.querySelector('.dropdown-toggle');
@@ -192,6 +193,8 @@
         <div class="container">
             <h1>@lang('employees.list_of_employees')</h1>
             <a href="{{ route('employees.create') }}" class="btn btn-success mb-3">@lang('employees.create_new_employee')</a>
+            <a href="{{ route('employees.export') }}" class="btn btn-info mb-3">Download Employees Excel</a>
+
             <table class="table">
                 <thead>
                     <tr>
