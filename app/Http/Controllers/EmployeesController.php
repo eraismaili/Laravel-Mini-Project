@@ -22,20 +22,28 @@ class EmployeesController extends Controller
         $this->middleware(['permission:edit-users'], ['only' => ['edit', 'update']]);
         $this->middleware(['permission:delete-users'], ['only' => ['destroy']]);
     }
-    public function index(Request $request)
+    public function index()
     {
-        $search = $request->input('search');
-
+        return view('employees.index');
+    }
+    public function getEmployees(Request $request)
+    {
         $employeesQuery = Employee::query()->with('company');
-        if ($search) {
-            $employeesQuery->where('first_name', 'LIKE', "%$search%")
-                ->orWhereHas('company', function ($query) use ($search) {
-                    $query->where('name', 'LIKE', "%$search%");
-                });
-        }
-        $employees = $employeesQuery->paginate(5)->appends(['search' => $search]);
 
-        return view('employees.index', compact('employees'));
+        return datatables()->eloquent($employeesQuery)
+            ->addColumn('actions', function ($employee) {
+                $editUrl = route('employees.edit', $employee->id);
+                $deleteUrl = route('employees.destroy', $employee->id);
+                return '
+                <a href="' . $editUrl . '" class="btn btn-primary">Edit</a>
+                <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
+                    ' . csrf_field() . '
+                    ' . method_field('DELETE') . '
+                    <button type="submit" class="btn btn-danger" onclick="return confirm(\'Are you sure you want to delete ' . $employee->first_name . ' ' . $employee->last_name . '?\')">Delete</button>
+                </form>';
+            })
+            ->rawColumns(['actions'])
+            ->toJson();
     }
 
     public function create()

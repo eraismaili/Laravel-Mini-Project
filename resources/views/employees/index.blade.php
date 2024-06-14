@@ -1,6 +1,7 @@
 @extends('layouts.layout')
 
 @section('content')
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -57,58 +58,7 @@
             background-color: #f7e4f8ef !important;
             color: #212529 !important;
         }
-
-
-        .search-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .search-container input[type="text"] {
-            width: 300px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            margin-right: 10px;
-        }
-
-        .search-container button {
-            padding: 10px 20px;
-            background-color: #007bff;
-            border: none;
-            border-radius: 4px;
-            color: #fff;
-            cursor: pointer;
-            margin-right: 10px;
-        }
-
-        .search-container button:hover {
-            background-color: #0056b3;
-        }
-
-        .btn-back {
-            display: flex;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #6c757d;
-            border: none;
-            border-radius: 4px;
-            color: #fff;
-            text-decoration: none;
-        }
-
-        .btn-back:hover {
-            background-color: #5a6268;
-        }
-
-        .btn-back .arrow-left {
-            margin-right: 5px;
-            font-size: 18px;
-        }
     </style>
-
 
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
@@ -163,79 +113,77 @@
         </nav>
     </header>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var dropdownToggle = document.querySelector('.dropdown-toggle');
-            var dropdownMenu = document.querySelector('.dropdown-menu');
-
-            dropdownToggle.addEventListener('click', function() {
-                dropdownMenu.classList.toggle('show');
-            });
-
-            window.addEventListener('click', function(event) {
-                if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
-                    dropdownMenu.classList.remove('show');
-                }
-            });
-        });
-    </script>
-
     <body>
-        <div class="search-container">
-            <form action="{{ route('employees.index') }}" method="GET">
-                <input type="text" name="search" placeholder="Search Employees or Companies">
-                <button type="submit">@lang('employees.search_button')</button>
-            </form>
-            <a href="{{ route('employees.index') }}" class="btn-back">
-                <span class="arrow-left">&#8592;</span> Back to Employees
-            </a>
-        </div>
         <div class="container">
             <h1>@lang('employees.list_of_employees')</h1>
             <a href="{{ route('employees.create') }}" class="btn btn-success mb-3">@lang('employees.create_new_employee')</a>
             <a href="{{ route('employees.export') }}" class="btn btn-info mb-3">Download Employees Excel</a>
 
-            <table class="table">
+            <table id="employees-table" class="display">
                 <thead>
                     <tr>
-                        <th>@lang ('employees.first_name')</th>
-                        <th>@lang ('employees.last_name')</th>
+                        <th>@lang('employees.first_name')</th>
+                        <th>@lang('employees.last_name')</th>
                         <th>@lang('employees.email')</th>
                         <th>@lang('employees.phone')</th>
                         <th>@lang('employees.company')</th>
                         <th>@lang('employees.actions')</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($employees as $employee)
-                        <tr>
-                            <td>{{ $employee->first_name }}</td>
-                            <td>{{ $employee->last_name }}</td>
-                            <td>{{ $employee->email }}</td>
-                            <td>{{ $employee->phone }}</td>
-                            <td>{{ $employee->company->name }}</td>
-                            <td>
-                                <a href="{{ route('employees.edit', $employee->id) }}"
-                                    class="btn btn-primary">@lang('employees.edit_button')</a>
-                                <form action="{{ route('employees.destroy', $employee->id) }}" method="POST"
-                                    style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-danger"
-                                        onclick="return confirm('Are you sure you want to delete {{ $employee->first_name }} {{ $employee->last_name }}?')">@lang('employees.delete_button')</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
             </table>
-            {{ $employees->links('pagination.custom') }}
         </div>
     </body>
 
-    </html>
-@endsection
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap4.min.css">
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var table = $('#employees-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '{{ route('employees.data') }}',
+                    data: function(d) {
+                        d.search = $('input[type="search"]').val();
+                    }
+                },
+                columns: [{
+                        data: 'first_name',
+                        name: 'first_name'
+                    },
+                    {
+                        data: 'last_name',
+                        name: 'last_name'
+                    },
+                    {
+                        data: 'email',
+                        name: 'email'
+                    },
+                    {
+                        data: 'phone',
+                        name: 'phone'
+                    },
+                    {
+                        data: 'company.name',
+                        name: 'company.name'
+                    },
+                    {
+                        data: 'actions',
+                        name: 'actions',
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
+
+            $('#employees-table_filter input').unbind().bind('keyup', function(e) {
+                if (e.keyCode === 13) {
+                    table.search(this.value).draw();
+                }
+            });
+        });
+    </script>
+@endsection

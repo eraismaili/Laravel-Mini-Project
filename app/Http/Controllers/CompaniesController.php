@@ -33,9 +33,7 @@ class CompaniesController extends Controller
         $search = $request->input('search');
         $recentlyCreatedCompanies = Company::createdLastTenDays()->get();
         $companiesWithMoreThanTwoEmployees = Company::hasMoreThanTwoEmployees()->get();
-        $companies = Company::where('name', 'LIKE', "%$search%")
-            ->paginate(5)
-            ->appends(['search' => $search]);
+        $companies = Company::all();
 
         return view('companies.index', [
             'recentlyCreatedCompanies' => $recentlyCreatedCompanies,

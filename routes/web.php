@@ -21,6 +21,7 @@ Route::get('paypal/pay', function () {
 Route::any('employees/export', [EmployeesController::class, 'export'])->name('employees.export');
 Route::any('companies/export', [CompaniesController::class, 'export'])->name('companies.export');
 
+
 Route::get('paypal', [PayPalController::class, 'payWithPayPal'])->name('paypal.payWithPayPal');
 Route::get('paypal/status', [PayPalController::class, 'payPalStatus'])->name('paypal.status');
 
@@ -65,7 +66,11 @@ Route::middleware(['auth:web'])->group(function () {
         Route::get('/{employee}/edit', [EmployeesController::class, 'edit'])->name('employees.edit');
         Route::put('/{employee}', [EmployeesController::class, 'update'])->name('employees.update');
         Route::delete('/{employee}', [EmployeesController::class, 'destroy'])->name('employees.destroy');
+        Route::get('employees/data', [EmployeesController::class, 'getEmployees'])->name('employees.data');
+
+        Route::get('employees/data', [EmployeesController::class, 'getEmployees'])->name('employees.data');
     });
+
 });
 
 
