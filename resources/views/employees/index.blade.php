@@ -12,6 +12,9 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
         header nav ul {
@@ -30,6 +33,10 @@
             text-decoration: none;
         }
 
+        .content-wrapper {
+            flex: 1;
+        }
+
         main {
             text-align: center;
             position: relative;
@@ -42,16 +49,6 @@
             font-size: 2rem;
             color: #44363694;
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-        }
-
-        footer {
-            background-color: #343a40;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
         }
 
         .form {
@@ -114,76 +111,54 @@
     </header>
 
     <body>
-        <div class="container">
-            <h1>@lang('employees.list_of_employees')</h1>
-            <a href="{{ route('employees.create') }}" class="btn btn-success mb-3">@lang('employees.create_new_employee')</a>
-            <a href="{{ route('employees.export') }}" class="btn btn-info mb-3">Download Employees Excel</a>
+        <div class="content-wrapper">
+            <div class="container">
+                <h1>@lang('employees.list_of_employees')</h1>
+                <a href="{{ route('employees.create') }}" class="btn btn-success mb-3">@lang('employees.create_new_employee')</a>
+                <a href="{{ route('employees.export') }}" class="btn btn-info mb-3">Download Employees Excel</a>
 
-            <table id="employees-table" class="display">
-                <thead>
-                    <tr>
-                        <th>@lang('employees.first_name')</th>
-                        <th>@lang('employees.last_name')</th>
-                        <th>@lang('employees.email')</th>
-                        <th>@lang('employees.phone')</th>
-                        <th>@lang('employees.company')</th>
-                        <th>@lang('employees.actions')</th>
-                    </tr>
-                </thead>
-            </table>
+                <table id="employees-table" class="display">
+                    <thead>
+                        <tr>
+                            <th>@lang('employees.first_name')</th>
+                            <th>@lang('employees.last_name')</th>
+                            <th>@lang('employees.email')</th>
+                            <th>@lang('employees.phone')</th>
+                            <th>@lang('employees.company')</th>
+                            <th>@lang('employees.actions')</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($employees as $employee)
+                            <tr>
+                                <td>{{ $employee->first_name }}</td>
+                                <td>{{ $employee->last_name }}</td>
+                                <td>{{ $employee->email }}</td>
+                                <td>{{ $employee->phone }}</td>
+                                <td>{{ $employee->company->name }}</td>
+                                <td>
+                                    <a href="{{ route('employees.edit', $employee->id) }}" class="btn btn-primary">Edit</a>
+                                    <form action="{{ route('employees.destroy', $employee->id) }}" method="POST"
+                                        style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Are you sure you want to delete {{ $employee->first_name }} {{ $employee->last_name }}?')">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </body>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/2.0.8/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.bootstrap4.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.8/css/dataTables.bootstrap4.min.css">
-
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
-            var table = $('#employees-table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: {
-                    url: '{{ route('employees.data') }}',
-                    data: function(d) {
-                        d.search = $('input[type="search"]').val();
-                    }
-                },
-                columns: [{
-                        data: 'first_name',
-                        name: 'first_name'
-                    },
-                    {
-                        data: 'last_name',
-                        name: 'last_name'
-                    },
-                    {
-                        data: 'email',
-                        name: 'email'
-                    },
-                    {
-                        data: 'phone',
-                        name: 'phone'
-                    },
-                    {
-                        data: 'company.name',
-                        name: 'company.name'
-                    },
-                    {
-                        data: 'actions',
-                        name: 'actions',
-                        orderable: false,
-                        searchable: false
-                    }
-                ]
-            });
-
-            $('#employees-table_filter input').unbind().bind('keyup', function(e) {
-                if (e.keyCode === 13) {
-                    table.search(this.value).draw();
-                }
-            });
+            $('#employees-table').DataTable();
         });
     </script>
 @endsection

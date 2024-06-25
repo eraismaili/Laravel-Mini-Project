@@ -12,11 +12,26 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
 
-
     <style>
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            background-image: url('/images/pic.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            font-family: Arial, sans-serif;
+        }
+
         .wrapper {
             display: flex;
             width: 100%;
+            flex: 1;
+            flex-direction: row;
         }
 
         #sidebar {
@@ -55,26 +70,13 @@
         .content {
             width: 100%;
             padding: 20px;
-            min-height: 100vh;
             background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
         }
 
-        footer {
-            background-color: #343a40;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            background-image: url('/images/pic.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
+        .content-wrapper {
+            flex: 1;
         }
 
         header nav ul {
@@ -108,14 +110,10 @@
         }
 
         footer {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
-        .form {
-            background-color: #f7e4f8ef !important;
-            color: #212529 !important;
+            background-color: #343a40;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
         }
     </style>
 </head>
@@ -149,7 +147,9 @@
         @endauth
 
         <div class="content">
-            @yield('content')
+            <div class="content-wrapper">
+                @yield('content')
+            </div>
         </div>
     </div>
 
@@ -164,15 +164,9 @@
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap4.min.js">
     </script>
-
     <script src="{{ asset('js/app.js') }}"></script>
-    <!-- Add jQuery first -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-    <!-- DataTables CSS -->
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.css">
-
-    <!-- DataTables JS -->
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.js"></script>
 
 </body>

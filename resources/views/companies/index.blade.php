@@ -14,13 +14,6 @@
             background-repeat: no-repeat;
         }
 
-        header {
-            background-color: rgba(51, 51, 51, 0.8);
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-
         header nav ul {
             list-style: none;
             padding: 0;
@@ -52,16 +45,6 @@
             text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         }
 
-        footer {
-            background-color: rgba(51, 51, 51, 0.8);
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-
         .form {
             background-color: #f7e4f8ef !important;
             color: #212529 !important;
@@ -70,35 +53,65 @@
         .toggle-section {
             display: none;
         }
+
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
     </style>
 
     <header>
-        <nav>
-            <ul>
-                @guest
-                    <li><a href="{{ route('home') }}">
-                            Home</a></li>
-                    <li><a href="{{ route('register') }}">Register</a></li>
-                    <li><a href="{{ route('login') }}">Login</a></li>
-                @else
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" id="profileDropdown" role="button" aria-haspopup="true"
-                            aria-expanded="false">Profile</a>
-                        <div class="dropdown-menu" aria-labelledby="profileDropdown">
-                            <a class="dropdown-item" href="{{ route('profile.edit') }}">@lang('profile.edit_profile')</a>
-                            <a class="dropdown-item" href="{{ route('profile.update-password.form') }}">@lang('profile.update_password')</a>
-                            <form action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button type="submit" class="dropdown-item">@lang('profile.logout')</button>
-                            </form>
-                        </div>
-                    </li>
-                    @if (Auth::user()->hasRole('admin'))
-                        <li><a href="{{ route('companies.index') }}">@lang('companies.companies')</a></li>
-                        <li><a href="{{ route('employees.index') }}">@lang('companies.employees')</a></li>
-                    @endif
-                @endguest
-            </ul>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mr-auto">
+                        @guest
+                            <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                        @else
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@lang('profile.profile')</a>
+                                <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                                    <a class="dropdown-item" href="{{ route('profile.show') }}">@lang('profile.view_profile')</a>
+                                    <a class="dropdown-item" href="{{ route('profile.edit') }}">@lang('profile.edit_profile')</a>
+                                    <a class="dropdown-item"
+                                        href="{{ route('profile.update-password.form') }}">@lang('profile.update_password')</a>
+                                    <a class="dropdown-item" href="{{ route('companies.index') }}">Companies</a>
+
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="dropdown-item">@lang('profile.logout')</button>
+                                    </form>
+                                </div>
+                            </li>
+                            @if (Auth::user()->hasRole('admin'))
+                                <li class="nav-item"><a class="nav-link"
+                                        href="{{ route('companies.index') }}">@lang('profile.companies')</a>
+                                </li>
+                                <li class="nav-item"><a class="nav-link"
+                                        href="{{ route('employees.index') }}">@lang('profile.employees')</a>
+                                </li>
+                            @endif
+                        @endguest
+                    </ul>
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Language
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="locale/en">English</a>
+                                <a class="dropdown-item" href="locale/al">Albanian</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </nav>
     </header>
 
@@ -106,10 +119,10 @@
         <div class="container">
             <h1>@lang('companies.list_of_companies')</h1>
 
-            <div class="mb-3">
+            <div class="button-group">
                 @if (Auth::user()->hasRole('admin'))
                     <a href="{{ route('companies.create') }}" class="btn btn-primary">@lang('companies.create_new_company')</a>
-                    <a href="{{ route('companies.export') }}" class="btn btn-success mb-3">Download Excel</a>
+                    <a href="{{ route('companies.export') }}" class="btn btn-success">Download Excel</a>
                 @endif
             </div>
 
@@ -276,8 +289,6 @@
             </table>
         </div>
     </main>
-
-
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>

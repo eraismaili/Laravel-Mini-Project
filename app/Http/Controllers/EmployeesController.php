@@ -24,25 +24,16 @@ class EmployeesController extends Controller
     }
     public function index()
     {
-        return view('employees.index');
+        $employees = Employee::with('company')->get();
+
+        return view('employees.index', compact('employees'));
     }
+
     public function getEmployees(Request $request)
     {
         $employeesQuery = Employee::query()->with('company');
 
         return datatables()->eloquent($employeesQuery)
-            ->addColumn('actions', function ($employee) {
-                $editUrl = route('employees.edit', $employee->id);
-                $deleteUrl = route('employees.destroy', $employee->id);
-                return '
-                <a href="' . $editUrl . '" class="btn btn-primary">Edit</a>
-                <form action="' . $deleteUrl . '" method="POST" style="display:inline;">
-                    ' . csrf_field() . '
-                    ' . method_field('DELETE') . '
-                    <button type="submit" class="btn btn-danger" onclick="return confirm(\'Are you sure you want to delete ' . $employee->first_name . ' ' . $employee->last_name . '?\')">Delete</button>
-                </form>';
-            })
-            ->rawColumns(['actions'])
             ->toJson();
     }
 
