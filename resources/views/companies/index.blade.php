@@ -60,6 +60,16 @@
             gap: 10px;
             margin-bottom: 15px;
         }
+
+        .side-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .side-buttons .btn {
+            margin-left: 5px;
+        }
     </style>
 
     <header>
@@ -117,141 +127,53 @@
 
     <main>
         <div class="container">
-            <h1>@lang('companies.list_of_companies')</h1>
 
-            <div class="button-group">
-                @if (Auth::user()->hasRole('admin'))
-                    <a href="{{ route('companies.create') }}" class="btn btn-primary">@lang('companies.create_new_company')</a>
-                    <a href="{{ route('companies.export') }}" class="btn btn-success">Download Excel</a>
-                @endif
-            </div>
+            <h2>Import Companies</h2>
 
+            @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            <form action="{{ route('companies.import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                <div class="form-group">
+                    <label for="file">Choose Excel File</label>
+                    <input type="file" name="file" class="form-control" id="file" required>
+                </div>
+                <button type="submit" class="btn btn-primary mt-2">Import</button>
+                <br>
+            </form>
+            <br />
+        </div>
+        <div class="button-group">
+            @if (Auth::user()->hasRole('admin'))
+                <a href="{{ route('companies.create') }}" class="btn btn-primary">@lang('companies.create_new_company')</a>
+                <a href="{{ route('companies.export') }}" class="btn btn-success">Download Excel</a>
+            @endif
+        </div>
+
+        <div class="side-buttons">
             <button class="btn btn-secondary" id="toggleRecentCompanies">@lang('companies.show_last_companies')</button>
-
-            <div id="recentCompanies" class="toggle-section">
-                <table class="table" id="recentCompaniesTable">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Employee</th>
-                            <th>Logo</th>
-                            <th>Website</th>
-                            @if (Auth::user()->hasRole('admin'))
-                                <th>Actions</th>
-                            @endif
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($recentlyCreatedCompanies as $company)
-                            <tr>
-                                <td>{{ $company->name }}</td>
-                                <td>{{ $company->email }}</td>
-                                <td>
-                                    @forelse($company->employees as $employee)
-                                        {{ $employee->first_name }}
-                                        @if (!$loop->last)
-                                            ,
-                                        @endif
-                                    @empty
-                                        No Employees
-                                    @endforelse
-                                </td>
-                                <td>
-                                    <img src="{{ asset('storage/images/' . ($company->logo ?? 'atis.png')) }}"
-                                        alt="Company Logo" width="50">
-                                </td>
-                                <td><a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></td>
-                                <td>
-                                    @if (Auth::user()->hasRole('admin'))
-                                        <a href="{{ route('companies.edit', $company->id) }}"
-                                            class="btn btn-primary">@lang('companies.edit')</a>
-                                        <form action="{{ route('companies.destroy', $company->id) }}" method="POST"
-                                            style="display: inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"
-                                                onclick="return confirm('Are you sure you want to delete this company?')">@lang('companies.delete')</button>
-                                        </form>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
             <button class="btn btn-secondary" id="toggleCompaniesWithEmployees">@lang('companies.show_companies')</button>
-
-            <div id="companiesWithEmployees" class="toggle-section">
-                <table class="table" id="companiesWithEmployeesTable">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Employee</th>
-                            <th>Logo</th>
-                            <th>Website</th>
-                            @if (Auth::user()->hasRole('admin'))
-                                <th>Actions</th>
-                            @endif
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($companiesWithMoreThanTwoEmployees as $company)
-                            <tr>
-                                <td>{{ $company->name }}</td>
-                                <td>{{ $company->email }}</td>
-                                <td>
-                                    @forelse($company->employees as $employee)
-                                        {{ $employee->first_name }}
-                                        @if (!$loop->last)
-                                            ,
-                                        @endif
-                                    @empty
-                                        No Employees
-                                    @endforelse
-                                </td>
-                                <td>
-                                    <img src="{{ asset('storage/images/' . ($company->logo ?? 'atis.png')) }}"
-                                        alt="Company Logo" width="50">
-                                </td>
-                                <td><a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></td>
-                                <td>
-                                    @if (Auth::user()->hasRole('admin'))
-                                        <a href="{{ route('companies.edit', $company->id) }}"
-                                            class="btn btn-primary">@lang('companies.edit')</a>
-                                        <form action="{{ route('companies.destroy', $company->id) }}" method="POST"
-                                            style="display: inline-block;">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger"
-                                                onclick="return confirm('Are you sure you want to delete this company?')">@lang('companies.delete')</button>
-                                        </form>
-                                    @endif
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-
-            <h2>@lang('companies.all_companies')</h2>
-            <table class="table" id="allCompaniesTable">
+        </div>
+        <div id="recentCompanies" class="toggle-section">
+            <table class="table" id="recentCompaniesTable">
                 <thead>
                     <tr>
-                        <th>@lang('companies.name')</th>
-                        <th>@lang('companies.email')</th>
-                        <th>@lang('companies.employee')</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Employee</th>
                         <th>Logo</th>
-                        <th>@lang('companies.website')</th>
+                        <th>Website</th>
                         @if (Auth::user()->hasRole('admin'))
-                            <th>@lang('companies.actions')</th>
+                            <th>Actions</th>
                         @endif
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($companies as $company)
+                    @foreach ($recentlyCreatedCompanies as $company)
                         <tr>
                             <td>{{ $company->name }}</td>
                             <td>{{ $company->email }}</td>
@@ -287,6 +209,114 @@
                     @endforeach
                 </tbody>
             </table>
+        </div>
+
+        {{-- <button class="btn btn-secondary" id="toggleCompaniesWithEmployees">@lang('companies.show_companies')</button> --}}
+
+        <div id="companiesWithEmployees" class="toggle-section">
+            <table class="table" id="companiesWithEmployeesTable">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Employee</th>
+                        <th>Logo</th>
+                        <th>Website</th>
+                        @if (Auth::user()->hasRole('admin'))
+                            <th>Actions</th>
+                        @endif
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($companiesWithMoreThanTwoEmployees as $company)
+                        <tr>
+                            <td>{{ $company->name }}</td>
+                            <td>{{ $company->email }}</td>
+                            <td>
+                                @forelse($company->employees as $employee)
+                                    {{ $employee->first_name }}
+                                    @if (!$loop->last)
+                                        ,
+                                    @endif
+                                @empty
+                                    No Employees
+                                @endforelse
+                            </td>
+                            <td>
+                                <img src="{{ asset('storage/images/' . ($company->logo ?? 'atis.png')) }}"
+                                    alt="Company Logo" width="50">
+                            </td>
+                            <td><a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></td>
+                            <td>
+                                @if (Auth::user()->hasRole('admin'))
+                                    <a href="{{ route('companies.edit', $company->id) }}"
+                                        class="btn btn-primary">@lang('companies.edit')</a>
+                                    <form action="{{ route('companies.destroy', $company->id) }}" method="POST"
+                                        style="display: inline-block;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger"
+                                            onclick="return confirm('Are you sure you want to delete this company?')">@lang('companies.delete')</button>
+                                    </form>
+                                @endif
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+
+        <h2>@lang('companies.all_companies')</h2>
+        <table class="table" id="allCompaniesTable">
+            <thead>
+                <tr>
+                    <th>@lang('companies.name')</th>
+                    <th>@lang('companies.email')</th>
+                    <th>@lang('companies.employee')</th>
+                    <th>Logo</th>
+                    <th>@lang('companies.website')</th>
+                    @if (Auth::user()->hasRole('admin'))
+                        <th>@lang('companies.actions')</th>
+                    @endif
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($companies as $company)
+                    <tr>
+                        <td>{{ $company->name }}</td>
+                        <td>{{ $company->email }}</td>
+                        <td>
+                            @forelse($company->employees as $employee)
+                                {{ $employee->first_name }}
+                                @if (!$loop->last)
+                                    ,
+                                @endif
+                            @empty
+                                No Employees
+                            @endforelse
+                        </td>
+                        <td>
+                            <img src="{{ asset('storage/images/' . ($company->logo ?? 'atis.png')) }}" alt="Company Logo"
+                                width="50">
+                        </td>
+                        <td><a href="{{ $company->website }}" target="_blank">{{ $company->website }}</a></td>
+                        <td>
+                            @if (Auth::user()->hasRole('admin'))
+                                <a href="{{ route('companies.edit', $company->id) }}"
+                                    class="btn btn-primary">@lang('companies.edit')</a>
+                                <form action="{{ route('companies.destroy', $company->id) }}" method="POST"
+                                    style="display: inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger"
+                                        onclick="return confirm('Are you sure you want to delete this company?')">@lang('companies.delete')</button>
+                                </form>
+                            @endif
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
         </div>
     </main>
 

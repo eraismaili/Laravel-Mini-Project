@@ -3,10 +3,29 @@
 @section('content')
     @if (Auth::user()->hasRole('admin'))
         <style>
-            .content-wrapper {
-                margin-left: 250px;
+            /* .content-wrapper {
+                                margin-left: 250px;
 
-                padding: 20px;
+                                padding: 20px;
+                            } */
+            header nav ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+            header nav ul li {
+                display: inline;
+                margin: 0 10px;
+            }
+
+            header nav ul li a {
+                color: #fff;
+                text-decoration: none;
+            }
+
+            header .navbar {
+                background-color: rgba(0, 0, 0, 0.7);
             }
 
             .small-box {
@@ -65,6 +84,57 @@
             }
         </style>
 
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-3">
+                <div class="container-fluid">
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav mr-auto">
+                            @guest
+                                <li class="nav-item"><a class="nav-link" href="{{ route('home') }}">Home</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
+                                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
+                            @else
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@lang('profile.profile')</a>
+                                    <div class="dropdown-menu" aria-labelledby="profileDropdown">
+                                        <a class="dropdown-item" href="{{ route('profile.show') }}">@lang('profile.view_profile')</a>
+                                        <a class="dropdown-item" href="{{ route('profile.edit') }}">@lang('profile.edit_profile')</a>
+                                        <a class="dropdown-item"
+                                            href="{{ route('profile.update-password.form') }}">@lang('profile.update_password')</a>
+                                        <a class="dropdown-item" href="{{ route('companies.index') }}">@lang('profile.companies')</a>
+
+                                        <form action="{{ route('logout') }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="dropdown-item">@lang('profile.logout')</button>
+                                        </form>
+                                    </div>
+                                </li>
+                                @if (Auth::user()->hasRole('admin'))
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('companies.index') }}">Companies</a>
+                                    </li>
+                                    <li class="nav-item"><a class="nav-link" href="{{ route('employees.index') }}">Employees</a>
+                                    </li>
+                                @endif
+                            @endguest
+                        </ul>
+                        <ul class="navbar-nav">
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                                    role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Language
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <a class="dropdown-item" href="locale/en">English</a>
+                                    <a class="dropdown-item" href="locale/al">Albanian</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </header>
+        <br>
         <div class="content-wrapper">
             <section class="content-header">
                 <h1>Dashboard</h1>

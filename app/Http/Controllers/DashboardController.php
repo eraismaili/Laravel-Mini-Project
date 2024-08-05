@@ -12,12 +12,12 @@ class DashboardController extends Controller
     function __construct()
     {
 
-        $this->middleware(['permission:view-dashboard']);
+        $this->middleware(['permission:view-dashboard'], ['only' => ['index']]);
     }
 
     public function index()
     {
 
-        return view('dashboard');
+        return view('auth.dashboard');
     }
 }

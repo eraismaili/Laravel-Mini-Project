@@ -4,36 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CompanyRequest;
 use Illuminate\Http\RedirectResponse;
-use App\Http\Resources\CompanyResource;
 use App\Models\Company;
-use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use App\Exports\CompaniesExport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Services\CompanyService;
+use App\Imports\CompaniesImport;
 
 class CompaniesController extends Controller
 {
-    // public function __construct()
-    // {
-    //     $this->middleware('auth');
-    //     $this->middleware('role:admin')->except('delete');
-    //     $this->middleware('role:user')->only('index', 'show');
-    // }
-    function __construct()
+    protected $companyService;
+
+    public function __construct(CompanyService $companyService)
     {
-        // $this->middleware(['permission:view-users|create-users|edit-users|delete-users|view-companies|create-companies|edit-companies|delete-companies'], ['only' => ['index', 'show']]);
+        $this->companyService = $companyService;
+
         $this->middleware(['permission:view-companies'], ['only' => ['index']]);
         $this->middleware(['permission:create-companies'], ['only' => ['create', 'store']]);
         $this->middleware(['permission:edit-companies'], ['only' => ['edit', 'update']]);
         $this->middleware(['permission:delete-companies'], ['only' => ['destroy']]);
     }
+
     public function index(Request $request)
     {
-        $search = $request->input('search');
-        $recentlyCreatedCompanies = Company::createdLastTenDays()->get();
-        $companiesWithMoreThanTwoEmployees = Company::hasMoreThanTwoEmployees()->get();
-        $companies = Company::all();
+        $recentlyCreatedCompanies = $this->companyService->getRecentlyCreatedCompanies();
+        $companiesWithMoreThanTwoEmployees = $this->companyService->getCompaniesWithMoreThanTwoEmployees();
+        $companies = $this->companyService->getAllCompanies();
 
         return view('companies.index', [
             'recentlyCreatedCompanies' => $recentlyCreatedCompanies,
@@ -42,64 +39,57 @@ class CompaniesController extends Controller
         ]);
     }
 
-
     public function create()
     {
         return view('companies.create');
     }
+
     public function store(CompanyRequest $request): RedirectResponse
     {
         $validatedData = $request->validated();
 
-        $company = new Company();
-        $company->name = $validatedData['name'];
-        $company->email = $validatedData['email'];
-        $company->website = $validatedData['website'];
-
-        if ($request->hasFile('logo')) {
-            $logo = $request->file('logo');
-            $logoName = time() . '.' . $logo->getClientOriginalExtension();
-            $logo->storeAs('public/images', $logoName);
-            $company->logo = $logoName;
-        }
-
-        $company->save();
+        $this->companyService->createCompany($validatedData);
 
         return redirect()->route("companies.index")->with("success", "Company created successfully");
     }
+
     public function show(Company $company)
     {
-        $employees = Employee::where('company_id', $company->id)->get();
-        return view('companies.show', compact('company', 'employees'));
+        return view('companies.show', compact('company'));
     }
 
     public function edit(Company $company)
     {
         return view('companies.edit', compact('company'));
     }
+
     public function update(CompanyRequest $request, Company $company): RedirectResponse
     {
         $validatedData = $request->validated();
 
-        if ($request->hasFile('logo')) {
-            $logo = $request->file('logo');
-            $logoName = time() . '.' . $logo->getClientOriginalExtension();
-            $logo->storeAs('public/images', $logoName);
-            $validatedData['logo'] = $logoName;
-        }
-
-        $company->update($validatedData);
+        $this->companyService->updateCompany($company, $validatedData);
 
         return redirect()->route("companies.index")->with("success", "Company updated successfully");
     }
 
     public function destroy(Company $company)
     {
-        $company->delete();
-        return redirect()->route('companies.index')->with('success', 'Employee deleted successfully');
+        $this->companyService->deleteCompany($company);
+        return redirect()->route('companies.index')->with('success', 'Company deleted successfully');
     }
+
     public function export()
     {
         return Excel::download(new CompaniesExport, 'companies.xlsx');
+    }
+    public function import(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        Excel::import(new CompaniesImport, $request->file('file'));
+
+        return redirect()->route('companies.index')->with('success', 'Companies imported successfully!');
     }
 }

@@ -7,46 +7,47 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\UpdatePasswordRequest;
+use App\Services\ProfileService;
 
 class ProfileController extends Controller
 {
+    protected $profileService;
+
+    public function __construct(ProfileService $profileService)
+    {
+        $this->profileService = $profileService;
+    }
+
     public function show()
     {
-        $user = Auth::user();
+        $user = $this->profileService->getUser();
         return view('auth.profile', compact('user'));
     }
 
     public function edit()
     {
-        $user = auth()->user();
+        $user = $this->profileService->getUser();
         return view('auth.edit', compact('user'));
     }
 
     public function update(UserRequest $request)
     {
-        $user = User::findOrFail(auth()->user()->id);
-
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->save();
+        $this->profileService->updateUser($request->validated());
 
         return redirect()->route('profile.show')->with('success', 'Profile updated successfully!');
     }
 
     public function updatePassword(UpdatePasswordRequest $request)
     {
-        $validatedData = $request->validated();
+        $updated = $this->profileService->updatePassword($request->validated());
 
-        $user = User::findOrFail(auth()->user()->id);
-
-        if (!password_verify($validatedData['current_password'], $user->password)) {
+        if (!$updated) {
             return redirect()->back()->withErrors(['current_password' => 'The current password is incorrect.']);
         }
-        $user->password = bcrypt($validatedData['password']);
-        $user->save();
 
         return redirect()->back()->with('success', 'Password updated successfully!');
     }
+
     public function showUpdatePasswordForm()
     {
         return view('auth.updatepassword');

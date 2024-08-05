@@ -20,6 +20,7 @@ Route::get('paypal/pay', function () {
 })->name('paypal.pay');
 Route::any('employees/export', [EmployeesController::class, 'export'])->name('employees.export');
 Route::any('companies/export', [CompaniesController::class, 'export'])->name('companies.export');
+Route::any('companies/import', [CompaniesController::class, 'import'])->name('companies.import');
 
 
 Route::get('paypal', [PayPalController::class, 'payWithPayPal'])->name('paypal.payWithPayPal');
